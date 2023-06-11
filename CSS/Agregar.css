@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    text-align: center;
+  }
+
+  header {
+    background-color: #27272b;
+    color: #fff;
+    font-family:'Times New Roman', Times, serif;
+    padding: 10px;
+    text-align: center;
+  }
+
+div{
+    color: #27272b;
+    text-align: left;
+}
+
+button{
+    color:#27272b;
+}
+
+tr{
+    color: #27272b;
+}
