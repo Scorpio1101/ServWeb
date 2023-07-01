@@ -1,103 +1,138 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="../CSS/Agregar.css" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet" href="../CSS/Agregar.css">
+    <style>
+      body, h1, label, input, th, td, button {
+        color: white;
+      }
+      .btn-generate-password {
+        background-color: rgb(1, 1, 153);
+        color: azure;
+      }
+      .btn-toggle-password {
+        margin-left: 10px;
+      }
+      .btn-toggle-password {
+        background-color: rgb(0, 0, 0);
+        color: azure;
+      }
+    </style>
   </head>
   <body>
     <header>
-      <h1>Usuarios</h1>
+      <div class="volver-container">
+        <a href="javascript:history.go(-1)">
+          <img src="../IMÁGENES/volver.png" alt="Botón Volver">
+        </a>
+      </div>
+      <a href="../HTML/PrincipalAdmin.html">
+        <img src="../IMÁGENES/Logo.png">
+      </a>
+      <h1>Agregar Usuario</h1>
     </header>
+
     <div class="container mt-5 text-white">
-        <div class="text-center">
+      <div class="main row justify-content-center">
+        <div class="col-8 mb-3 form-group">
+          <label for="firstName" class="form-label">Nombre</label>
+          <input class="form-control" id="firstName" type="text" placeholder="Ingrese el nombre">
         </div>
-        <div class="main row justify-content-center">
-          <div class="col-8 mb-3 form-group">
-            <label for="firstName" class="form-label">Nombre</label>
-            <input
-              class="form-control align-self-center"
-              id="firstName"
-              type="text"
-              placeholder="Ingrese su nombre"
-            />
+
+        <div class="col-8 mb-3 form-group">
+          <label for="lastName" class="form-label">Apellidos</label>
+          <input class="form-control" id="lastName" type="text" placeholder="Ingrese los apellidos">
+        </div>
+
+        <div class="col-8 mb-3 form-group">
+          <label for="age" class="form-label">Edad</label>
+          <input class="form-control" id="age" type="number" placeholder="Ingrese la edad">
+        </div>
+
+        <div class="col-8 mb-3 form-group">
+          <label for="cedula" class="form-label">Cédula</label>
+          <input class="form-control" id="cedula" type="text" placeholder="Ingrese la cédula">
+        </div>
+
+        <div class="col-8 mb-3 form-group">
+          <label for="email" class="form-label">Email</label>
+          <input class="form-control" id="email" type="email" placeholder="Ingrese el email">
+        </div>
+
+        <div class="col-8 mb-3 form-group">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-group">
+            <input class="form-control" id="password" type="password" placeholder="Genere una contraseña">
+            <button class="btn btn-generate-password" onclick="generarContrasena()">Generar Contraseña</button>
+            <button class="btn btn-toggle-password" onclick="togglePasswordVisibility()">Mostrar</button>
           </div>
-      
-          <div class="col-8 mb-3 form-group">
-            <label for="lastName" class="form-label">Apellidos</label>
-            <input
-              class="form-control align-self-center"
-              id="lastName"
-              type="text"
-              placeholder="Ingrese sus apellidos"
-            />
-          </div>
-          <div class="col-8 mb-3 form-group">
-            <label for="age" class="form-label">Edad</label>
-            <input
-              class="form-control align-self-center"
-              id="age"
-              type="number"
-              placeholder="Ingrese su edad"
-            />
-          </div>
-          <div class="col-8 mb-3 form-group">
-            <label for="gender" class="form-label">Cédula</label>
-            <input
-              class="form-control align-self-center"
-              id="gender"
-              type="text"
-              placeholder="Ingrese su sexo"
-            />
-          </div>
-      
-          <div class="col-8 mb-3 form-group">
-            <label for="email" class="form-label">Email</label>
-            <input
-              class="form-control align-self-center"
-              id="email"
-              type="email"
-              placeholder="Ingrese su email"
-            />
-          </div>
-          <div class="col-8">
-            <button class="btn btn-success" type="submit" id="submit-button">Agregar</button>
-          </div>
-      
-          <div class="col-10 mt-5">
-            <table class="table text-white m-4">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Apellidos</th>
-                  <th>Edad</th>
-                  <th>Cédula</th>
-                  <th>Email</th>
-                </tr>
-              </thead>
-              <tbody class="user-list">
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <button id="editar" class="btn btn-warning btn-sm edit" data-id="${usuario.id}">Editar</button>
-                    <button id="borrar" class="btn btn-danger btn-sm delete" data-id="${usuario.id}">Eliminar</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        </div>
+
+        <script>
+          function generarContrasena() {
+            var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var longitud = 10;
+            var contrasena = "";
+
+            for (var i = 0; i < longitud; i++) {
+              var indice = Math.floor(Math.random() * caracteres.length);
+              contrasena += caracteres.charAt(indice);
+            }
+
+            document.getElementById("password").value = contrasena;
+          }
+
+          function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("password");
+            var toggleButton = document.querySelector(".btn-toggle-password");
+
+            if (passwordInput.type === "password") {
+              passwordInput.type = "text";
+              toggleButton.textContent = "Ocultar";
+            } else {
+              passwordInput.type = "password";
+              toggleButton.textContent = "Mostrar";
+            }
+          }
+        </script>
+
+        <div class="col-8">
+          <button class="btn btn-success" type="submit" id="submit-button">Agregar</button>
+        </div>
+
+        <div class="col-10 mt-5">
+          <table class="table text-white m-4">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Edad</th>
+                <th>Cédula</th>
+                <th>Email</th>
+                <th>Password</th>
+              </tr>
+            </thead>
+            <tbody class="user-list">
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <button class="btn btn-warning btn-sm edit" data-id="${usuario.id}">Editar</button>
+                  <button class="btn btn-danger btn-sm delete" data-id="${usuario.id}">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
+    </div>
+    <script src="tu_script.js"></script>
   </body>
 </html>

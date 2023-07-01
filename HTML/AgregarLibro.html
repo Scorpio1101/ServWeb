@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Productos</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -8,72 +11,84 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="../CSS/Agregar.css" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Productos</title>
   </head>
   <body>
-          <header>
-            <h1>Agregar Productos</h1>
-          </header>
-          <div class="d-flex justify-content-center align-items-center">
-            <div class="container text-white mt-5">
-          <form>
-            <div class="form-group m-4">
-              <label for="nombre">Nombre:</label>
-              <input type="text" class="form-control" id="nombre" name="nombre">
-            </div>
-            <div class="form-group m-4">
-              <label for="precio">Autor:</label>
-              <input type="number" class="form-control" id="precio" name="precio">
-            </div>
-            <div class="form-group m-4">
-              <label for="año">Año:</label>
-              <input type="number" class="form-control" id="anno" name="anno">
-            </div>
-            <div class="form-group m-4">
-                <label for="año">Precio:</label>
-                <input type="number" class="form-control" id="anno" name="anno">
-              </div>
-            <div class="form-group m-4">
-              <label for="tipo">Tipo:</label>
-              <select class="form-control" id="tipo" name="tipo">
-                <option>Libro</option>
-                <option>Revista</option>
-                <option>Investigación</option>
-              </select>
-              <div class="form-group m-4">
-                <label for="imagen">Imagen:</label>
-                <input type="file" class="form-control-file" id="imagen" name="imagen">
-              </div>
-            </div>
-            <button class="btn btn-primary" id="btnGuardar">Guardar</button>
-          </form>
-          <br>
-          <table class="table text-white m-4">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Autor</th>
-                <th>Año</th>
-                <th>Precio</th>
-                <th>Tipo</th>
-              </tr>
-            </thead>
-            <tbody class="product-list">
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                  <button class="btn btn-sm btn-warning" id="editar" data-id="${producto.id}">Editar</button>
-                  <button class="btn btn-sm btn-danger" id="eliminar" data-id="${producto.id}">Eliminar</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    <header>
+      <div class="volver-container">
+        <a href="javascript:history.go(-1)">
+          <img src="../IMÁGENES/volver.png" alt="Botón Volver">
+        </a>
       </div>
+      <a href="../HTML/PrincipalAdmin.html">
+        <img src="../IMÁGENES/Logo.png">
+      </a>
+      <h1 style="color: white;">Agregar Productos</h1>
+    </header>
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="container text-white mt-5">
+        <form>
+          <div class="form-group m-4">
+            <label for="nombre" style="color: white;">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" />
+          </div>
+          <div class="form-group m-4">
+            <label for="autor" style="color: white;">Autor:</label>
+            <input type="text" class="form-control" id="autor" name="autor" />
+          </div>
+          <div class="form-group m-4">
+            <label for="anno" style="color: white;">Año:</label>
+            <input type="number" class="form-control" id="anno" name="anno" />
+          </div>
+          <div class="form-group m-4">
+            <label for="precio" style="color: white;">Precio:</label>
+            <input type="number" class="form-control" id="precio" name="precio" />
+          </div>
+          <div class="form-group m-4">
+            <label for="tipo" style="color: white;">Tipo:</label>
+            <select class="form-control" id="tipo" name="tipo">
+              <option style="color: black;">Libro</option>
+              <option style="color: black;">Revista</option>
+              <option style="color: black;">Investigación</option>
+            </select>
+          </div>
+          <div class="form-group m-4">
+            <label for="imagen" style="color: white;">Imagen:</label>
+            <input type="file" class="form-control-file" id="imagen" name="imagen" />
+          </div>
+          <button class="btn btn-primary" id="btnGuardar">Guardar</button>
+        </form>
+        <br />
+        <table class="table text-white m-4">
+          <thead>
+            <tr>
+              <th for="Nombre" style="color: white;">Nombre</th>
+              <th for="Autor" style="color: white;">Autor</th>
+                <th for="Año" style="color: white;">Año</th>
+                  <th for="Precio" style="color: white;">Precio</th>
+                    <th for="Tipo" style="color: white;">Tipo</th>
+                      <th for="Acciones" style="color: white;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="product-list">
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <button class="btn btn-sm btn-warning editar" data-id="${producto.id}" style="color: white;">Editar</button>
+                <button class="btn btn-sm btn-danger eliminar" data-id="${producto.id}" style="color: white;">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <style>
+      body, h1, label, input, th, td, button {
+        color: white;
+      }
+    </style>
   </body>
 </html>
