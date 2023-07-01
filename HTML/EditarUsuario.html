@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar</title>
+    <link rel="stylesheet" href="../CSS/PrincipalUsuario.css">
+</head>
+<body>
+    <header>
+        <div class="volver-container">
+            <a href="javascript:history.go(-1)">
+                <img src="../IMÁGENES/volver.png" alt="Botón Volver">
+            </a>
+        </div>
+        <a href="../HTML/PrincipalUsuario.html">
+            <img src="../IMÁGENES/Logo.png">
+        </a>
+        <div class="botones-container">
+            <button class="boton">Perfil</button>
+        </div>        
+    </header> 
+    <nav class="sidebar">
+        <a class="sidebar-link" href="../HTML/Perfil.html">
+            <img src="../IMÁGENES/usuario-de-perfil.png" alt="Usuario de perfil">
+            <div>Perfil</div>
+        </a>
+        <a class="regresar" href="../HTML/LogIn.html">
+            <img src="../IMÁGENES/cerrar-sesion.png" alt="Cerrar sesión">
+        </a>
+    </nav>
+    <div class="content">
+        <nav class="sidebarL">
+            <div class="login-form">
+                <form>
+                    <div class="edit-profile hidden">
+                        <h2>Editar perfil</h2>
+                        <br>
+                        <div class="profile-image">
+                            <label for="profile-image-upload">Imagen de perfil:</label>
+                            <input type="file" id="profile-image-upload">
+                        </div>
+                        <br>                      
+                        <input type="text" id="username" placeholder="Nombre de usuario" value="Nombre de usuario">
+                        <input type="email" id="email" placeholder="Correo electrónico" value="correo@example.com">
+                        <br>
+                        <br>
+                        <button class="save-button">Guardar cambios</button>
+                        <button class="cancel-button">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </nav>
+    </div>
+</body>
+</html>

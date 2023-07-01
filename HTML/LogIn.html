@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogIn</title>
+    <link rel="stylesheet" href="../CSS/PrincipalUsuario.css">
+</head>
+<body>
+    <header>
+        <img src="../IMÁGENES/Logo.png" alt="Logo">
+        <div class="botones-container">
+            <button class="boton">BiblioTek</button>
+        </div>
+    </header>
+    <div class="content">
+        <nav class="sidebarL">
+            <div class="login-form">
+                <form>
+                    <h1>LogIn</h1>
+                    <div class="inputs">
+                        <input type="email" placeholder="E-mail" id="email" />
+                        <input type="password" placeholder="Contraseña" id="password" />
+                        <button id="ingresar">Ingresar</button>
+                    </div>
+                    <div class="olvidar">
+                        <br>
+                        <a href="../HTML/Recuperacion.html">¿Olvidaste tu Contraseña?</a>
+                        <br>
+                        <a href="../HTML/Registro.html">¿No tienes cuenta? Crea una</a>
+                    </div>
+                    <div class="mensaje-error" style="color: rgb(177, 4, 4)"></div>
+                </form>
+            </div>
+            <script src="../LogIn/auth.js"></script>
+        </nav>
+    </div>
+</body>
+</html>
