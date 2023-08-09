@@ -39,23 +39,27 @@
     <div class="container mt-5 text-white">
       <div class="main row justify-content-center">
         <div class="col-8 mb-3 form-group">
-          <label for="firstName" class="form-label">Nombre</label>
-          <input class="form-control" id="firstName" type="text" placeholder="Ingrese el nombre">
+          <label for="first_name" class="form-label">Nombre</label>
+          <input class="form-control" id="first_name" type="text" placeholder="Ingrese el nombre">
         </div>
 
         <div class="col-8 mb-3 form-group">
-          <label for="lastName" class="form-label">Apellidos</label>
-          <input class="form-control" id="lastName" type="text" placeholder="Ingrese los apellidos">
+          <label for="last_name" class="form-label">Apellidos</label>
+          <input class="form-control" id="last_name" type="text" placeholder="Ingrese los apellidos">
         </div>
 
         <div class="col-8 mb-3 form-group">
-          <label for="age" class="form-label">Edad</label>
-          <input class="form-control" id="age" type="number" placeholder="Ingrese la edad">
+          <label for="roles" class="form-label">Edad</label>
+          <select id="roles">
+            <option value="" disabled selected>Seleccione un rol</option>
+            <option value="administrador">Administrador</option>
+            <option value="miembro">Miembro</option>
+        </select>
         </div>
 
         <div class="col-8 mb-3 form-group">
-          <label for="cedula" class="form-label">Cédula</label>
-          <input class="form-control" id="cedula" type="text" placeholder="Ingrese la cédula">
+          <label for="dni" class="form-label">Cédula</label>
+          <input class="form-control" id="dni" type="text" placeholder="Ingrese la cédula">
         </div>
 
         <div class="col-8 mb-3 form-group">
@@ -101,7 +105,7 @@
         </script>
 
         <div class="col-8">
-          <button class="btn btn-success" type="submit" id="submit-button">Agregar</button>
+          <button class="btn btn-success" type="submit" id="submit-button" onclick="register()">Agregar</button>
         </div>
 
         <div class="col-10 mt-5">
@@ -133,6 +137,14 @@
         </div>
       </div>
     </div>
-    <script src="tu_script.js"></script>
   </body>
+      <!-- The core Firebase JS SDK -->
+      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+      <!-- SDKs for Firebase products -->
+      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  
+      <!-- Our script must be loaded after firebase references -->
+      <script src="../Js/firebase.js"></script>
 </html>

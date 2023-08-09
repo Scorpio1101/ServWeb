@@ -17,25 +17,36 @@
     <div class="content">
         <nav class="sidebarL">
             <div class="login-form">
-                <form>
                     <h1>Registro</h1>
                     <div class="inputs">
-                        <input type="text" placeholder="Nombre completo" id="name" />
-                        <input type="email" placeholder="E-mail" id="email" />
-                        <input type="edad" placeholder="Edad" id="edad" />
-                        <input type="cedula" placeholder="Cédula" id="cedula" />
-                        <input type="password" placeholder="Contraseña" id="password" />
-                        <button id="registrarse">Registrarse</button>
+                        <input type="text" id="first_name" placeholder="Nombre">
+                        <input type="text" id="last_name" placeholder="Apellido">
+                        <select id="roles">
+                            <option value="" disabled selected>Seleccione un rol</option>
+                            <option value="administrador">Administrador</option>
+                            <option value="miembro">Miembro</option>
+                        </select>
+                        <input type="text" id="dni" placeholder="DNI">
+                        <input type="email" id="email" placeholder="Email">
+                        <input type="password" id="password" placeholder="Contraseña">
+                        <button onclick="register()">Register</button>
                     </div>
                     <div class="olvidar">
                         <br>
                         <a href="../HTML/LogIn.html">¿Ya tienes cuenta? Inicia sesión</a>
                     </div>
                     <div class="mensaje-error" style="color: rgb(177, 4, 4)"></div>
-                </form>
             </div>
-            <script type="module" src="../LogIn/auth.js"></script>
         </nav>
     </div>
 </body>
+    <!-- The core Firebase JS SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+    <!-- SDKs for Firebase products -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+    <!-- Our script must be loaded after firebase references -->
+    <script src="../Js/firebase.js"></script>
 </html>
