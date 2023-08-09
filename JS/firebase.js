@@ -46,7 +46,7 @@ function register () {
     var user = auth.currentUser
 
     // Add this user to Firebase Database
-    var database_ref = database.ref()
+    var database_ref = database.ref('/');
 
     // Create User data
     var user_data = {
@@ -63,7 +63,7 @@ function register () {
 
     // DOne
     alert('Usuario creado satisfactoriamente!') //Debug, eliminar en la v final
-    window.location.href = "../HTML/Login.html";
+    //window.location.href = "../HTML/Login.html";
   })
   .catch(function(error) {
     // Firebase will use this to alert of its errors
