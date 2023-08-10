@@ -140,13 +140,94 @@
       </div>
     </div>
   </body>
-      <!-- The core Firebase JS SDK -->
-      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-
-      <!-- SDKs for Firebase products -->
-      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
   
-      <!-- Our script must be loaded after firebase references -->
-      <script src="../Js/firebase.js"></script>
+  <script>
+    // Initialize Firebase and get a reference to the database
+    var firebaseConfig = {
+  apiKey: "AIzaSyAUuOzPZ1k3-YKMtQzO1AX9XE_hUgS0LhA",
+  authDomain: "bibliotek-6aa3f.firebaseapp.com",
+  databaseURL: "https://bibliotek-6aa3f-default-rtdb.firebaseio.com",
+  projectId: "bibliotek-6aa3f",
+  storageBucket: "bibliotek-6aa3f.appspot.com",
+  messagingSenderId: "459978600030",
+  appId: "1:459978600030:web:ccd097da5ab5c2c72a4ecf"
+};
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    function register() {
+      const firstName = document.getElementById("first_name").value;
+      const lastName = document.getElementById("last_name").value;
+      const userType = document.getElementById("roles").value;
+      const dni = document.getElementById("dni").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value; // For now, you can use the generated password
+
+      // Create a new user object
+      const userData = {
+        firstName: firstName,
+        lastName: lastName,
+        userType: userType,
+        dni: dni,
+        email: email,
+        password: password,
+      };
+
+      // Store the user data in the Firebase Realtime Database
+      database.ref("users").push(userData);
+
+      console.log("User data stored in the database.");
+
+      // Clear input fields after registering
+      document.getElementById("first_name").value = "";
+      document.getElementById("last_name").value = "";
+      document.getElementById("roles").value = "";
+      document.getElementById("dni").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("password").value = "";
+    }
+
+    // Listen for changes in the users' data and update the table
+    database.ref("users").on("child_added", snapshot => {
+      const user = snapshot.val();
+
+      const newRow = document.createElement("tr");
+      newRow.innerHTML = `
+        <td>${user.firstName}</td>
+        <td>${user.lastName}</td>
+        <td>${user.userType}</td>
+        <td>${user.dni}</td>
+        <td>${user.email}</td>
+        <td>${user.password}</td>
+        <td>
+          <button class="btn btn-warning btn-sm edit" data-id="${snapshot.key}">Editar</button>
+          <button class="btn btn-danger btn-sm delete" data-id="${snapshot.key}">Eliminar</button>
+        </td>
+      `;
+
+      document.querySelector(".user-list").appendChild(newRow);
+    });
+
+    // Add event listeners for edit and delete buttons (similar to books)
+    document.addEventListener("click", function (event) {
+      if (event.target.classList.contains("edit")) {
+        const userId = event.target.getAttribute("data-id");
+
+        // Retrieve user data based on userId and populate the form for editing
+        // Implement the logic to update user data and save it back to the database
+      } else if (event.target.classList.contains("delete")) {
+        const userId = event.target.getAttribute("data-id");
+
+        // Delete the user data from the Firebase Realtime Database
+        database.ref("users").child(userId).remove();
+
+        // Remove the row from the table immediately after deletion
+        event.target.closest("tr").remove();
+        console.log("Delete button clicked for user with ID:", userId);
+      }
+    });
+  </script>
 </html>
