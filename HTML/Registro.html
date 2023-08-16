@@ -5,41 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BiblioTek - Registro</title>
-    <link rel="stylesheet" href="../CSS/PrincipalUsuario.css">
+    <link rel="stylesheet" href="../CSS/Registro.css">
 </head>
 <body>
-    <header>
-        <img src="../IMÁGENES/Logo.png">
-        <div class="botones-container">
-            <button class="boton">BiblioTek</button>
+    <header class="header">
+        <img src="../IMÁGENES/Logo.png" alt="BiblioTek Logo" class="logo">
+        <div class="header-buttons">
+            <button class="button">Inicio</button>
+            <button class="button">Acerca de BiblioTek</button>
         </div>
     </header>
     <div class="content">
-        <nav class="sidebarL">
-            <div class="login-form">
-                    <h1>Registro</h1>
-                    <div class="inputs">
-                        <input type="text" id="first_name" placeholder="Nombre">
-                        <input type="text" id="last_name" placeholder="Apellido">
-                        <select id="roles">
-                            <option value="" disabled selected>Seleccione un rol</option>
-                            <option value="administrador">Administrador</option>
-                            <option value="miembro">Miembro</option>
-                        </select>
-                        <input type="text" id="dni" placeholder="DNI">
-                        <input type="email" id="email" placeholder="Email">
-                        <input type="password" id="password" placeholder="Contraseña">
-                        <button onclick="register()">Register</button>
-                    </div>
-                    <div class="olvidar">
-                        <br>
-                        <a href="../HTML/LogIn.html">¿Ya tienes cuenta? Inicia sesión</a>
-                    </div>
-                    <div class="mensaje-error" style="color: rgb(177, 4, 4)"></div>
+        <nav class="sidebar">
+            <div class="registration-form">
+                <h1 class="form-heading">¡Únete a BiblioTek!</h1>
+                <div class="inputs">
+                    <input type="text" id="first_name" placeholder="Nombre" class="input">
+                    <input type="text" id="last_name" placeholder="Apellido" class="input">
+                    <select id="roles" class="select">
+                        <option value="" disabled selected>Selecciona un rol</option>
+                        <option value="administrador">Administrador</option>
+                        <option value="miembro">Miembro</option>
+                    </select>
+                    <input type="text" id="dni" placeholder="DNI" class="input">
+                    <input type="email" id="email" placeholder="Email" class="input">
+                    <input type="password" id="password" placeholder="Contraseña" class="input">
+                    <button class="register-button" onclick="register()">Registrarse</button>
+                </div>
+                <div class="login-link">
+                    <a href="../HTML/LogIn.html">¿Ya tienes cuenta? Inicia sesión aquí</a>
+                </div>
             </div>
         </nav>
     </div>
 </body>
+</html>
     <!-- The core Firebase JS SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
 

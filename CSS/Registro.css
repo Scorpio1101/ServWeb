@@ -1,0 +1,118 @@
+/* Estilos para el header */
+body{
+    background-color: #2b2b2b;
+}
+.header {
+    background-color: #243f65;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    max-width: 100px;
+    height: auto;
+}
+
+.header-buttons .button {
+    background-color: #fff;
+    color: #243f65;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.header-buttons .button:hover {
+    background-color: #243f65;
+    ;
+    color: #fff;
+}
+
+/* Estilos para el contenido principal */
+.content {
+    display: flex;
+    padding: 20px;
+}
+
+/* Estilos para la barra lateral */
+.sidebar {
+    background-color: #f9f9f9;
+    padding: 20px;
+    width: 300px;
+    border-right: 1px solid #ddd;
+}
+
+/* Estilos para el formulario de registro */
+.registration-form {
+    text-align: center;
+    
+}
+
+.form-heading {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input:focus {
+    border-color: 243f65;
+}
+
+.select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.select:focus {
+    border-color: #243f65;
+}
+
+.register-button {
+    background-color: #243f65;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.register-button:hover {
+    background-color: #243f65;
+}
+
+.login-link a {
+    color: #243f65;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.login-link a:hover {
+    color: #243f65;
+}
+
+.error-message {
+    color: #FF0000;
+    margin-top: 20px;
+}
+
