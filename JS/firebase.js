@@ -18,7 +18,7 @@ const database = firebase.database()
 
 // Set up our register function
 function register () {
-  // Get all our input fields
+  // Obtén todos nuestros campos de entrada
   email = document.getElementById('email').value
   password = document.getElementById('password').value
   first_name = document.getElementById('first_name').value
@@ -26,47 +26,46 @@ function register () {
   dni = document.getElementById('dni').value
   roles = document.getElementById('roles').value
 
-
-  // Validate input fields
+  // Valida los campos de entrada
   if (validate_field(first_name) == false || validate_field(last_name) == false || validate_field(dni) == false){
     alert('Debe rellenar los campos vacíos')
     return
   }
   if (validate_email(email) == false || validate_password(password) == false) {
-    alert('Debe digitar un correo o contraseña validos')
+    alert('Debe digitar un correo o contraseña válidos')
     return
-    // Don't continue running the code
+    // No continúes ejecutando el código
   }
-  
-  
-  // Move on with Auth
+
+  // Continúa con la autenticación
   auth.createUserWithEmailAndPassword(email, password)
   .then(function() {
-    // Declare user variable
+    // Obtiene el usuario actual
     var user = auth.currentUser
 
-    // Add this user to Firebase Database
+    // Agrega este usuario a la base de datos de Firebase
     var database_ref = database.ref('/');
 
-    // Create User data
+    // Crea los datos del usuario
     var user_data = {
       email : email,
       first_name : first_name,
       last_name : last_name,
       last_login : Date.now(),
       dni : dni,
-      roles : roles
+      roles : roles,
+      password: password // Agrega el campo Contraseña
     }
 
-    // Push to Firebase Database
+    // Agrega a la base de datos de Firebase
     database_ref.child('users/' + user.uid).set(user_data)
 
-    // DOne
-    alert('Usuario creado satisfactoriamente!') //Debug, eliminar en la v final
+    // Listo
+    alert('Usuario creado satisfactoriamente!');
     //window.location.href = "../HTML/Login.html";
   })
   .catch(function(error) {
-    // Firebase will use this to alert of its errors
+    // Firebase utilizará esto para alertar de sus errores
     var error_code = error.code
     var error_message = error.message
 
