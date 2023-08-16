@@ -54,18 +54,26 @@ body {
     color: #ffffff;
 }
 
+.login-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; 
+}
+
 .login-button {
     width: 100%;
-    padding: 10px;
-    background-color: #ff5500;
+    padding:  10px 20px;
+    background-color: #243f65;
     color: #ffffff;
     border: none;
+    align-items: center;
     border-radius: 5px;
     cursor: pointer;
+    justify-content: center;
 }
 
 .login-button:hover {
-    background-color: #ff7700;
+    background-color: #ff5500;
 }
 
 .login-links {

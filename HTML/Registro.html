@@ -8,38 +8,36 @@
     <link rel="stylesheet" href="../CSS/Registro.css">
 </head>
 <body>
-    <header class="header">
-        <img src="../IMÁGENES/Logo.png" alt="BiblioTek Logo" class="logo">
-        <div class="header-buttons">
-            <button class="button">Inicio</button>
-            <button class="button">Acerca de BiblioTek</button>
+    <div class="container">
+        <img src="../IMÁGENES/Logo.png" alt="Logo" class="logo">
+        <h1 class="heading">¡Únete a BiblioTek!</h1>
+        <input type="text" id="first_name" placeholder="Nombre" class="input">
+        <input type="text" id="last_name" placeholder="Apellido" class="input">
+        <select id="roles" class="select">
+            <option value="" disabled selected>Selecciona un rol</option>
+            <option value="administrador">Administrador</option>
+            <option value="miembro">Miembro</option>
+        </select>
+        <input type="text" id="dni" placeholder="DNI" class="input">
+        <input type="email" id="email" placeholder="Email" class="input">
+        <input type="password" id="password" placeholder="Contraseña" class="input">
+        <div class="button-container">
+            <button class="button" onclick="register()">Registrarse</button>
         </div>
-    </header>
-    <div class="content">
-        <nav class="sidebar">
-            <div class="registration-form">
-                <h1 class="form-heading">¡Únete a BiblioTek!</h1>
-                <div class="inputs">
-                    <input type="text" id="first_name" placeholder="Nombre" class="input">
-                    <input type="text" id="last_name" placeholder="Apellido" class="input">
-                    <select id="roles" class="select">
-                        <option value="" disabled selected>Selecciona un rol</option>
-                        <option value="administrador">Administrador</option>
-                        <option value="miembro">Miembro</option>
-                    </select>
-                    <input type="text" id="dni" placeholder="DNI" class="input">
-                    <input type="email" id="email" placeholder="Email" class="input">
-                    <input type="password" id="password" placeholder="Contraseña" class="input">
-                    <button class="register-button" onclick="register()">Registrarse</button>
-                </div>
-                <div class="login-link">
-                    <a href="../HTML/LogIn.html">¿Ya tienes cuenta? Inicia sesión aquí</a>
-                </div>
-            </div>
-        </nav>
+        <div class="link-container">
+            <a href="../HTML/LogIn.html" class="link">¿Ya tienes cuenta? Inicia sesión aquí</a>
+        </div>
+    </div>
+
+    <div class="back-button-container">
+        <a href="../index.html" class="back-button">Regresar</a>
     </div>
 </body>
 </html>
+
+
+<!-- Agrega aquí los scripts de Firebase como en el ejemplo original -->
+
     <!-- The core Firebase JS SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
 

@@ -1,142 +1,136 @@
-* {
+body {
+  margin: 0;
   padding: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  background-color: #222;
+  color: #fff;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 60px;
+  margin-right: 10px;
+}
+.back-button-container {
+  position: fixed;
+  bottom: 20px; 
+  left: 20px; 
+}
+
+.back-button {
+  padding: 12px 20px;
+  background-color: #ff5500;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none;
+  display: block;
+}
+
+.back-button:hover {
+  background-color: #ff784d;
+}
+
+.title-text {
+  font-size: 24px;
   margin: 0;
 }
 
-body {
-  background-color: #212020;
-}
-
-header {
-  background-color: #243f65;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  border-radius: 40px;
-  font-family: 'Times New Roman', Times, serif;
-}
-
-header p {
-  margin: 0 auto;
-  color: white;
-}
-
-header img {
-  width: 50px;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.content {
-  width: calc(100vw - 240px);
-  color: white;
-}
-
-.botones-container {
-  display: flex;
-  margin-right: 10px;
-    font-family: 'Times New Roman', Times, serif;
-}
-
-.boton {
-  background-color: transparent;
-  border: none;
-  padding: 3px;
-  margin-left: 10px;
-  color: white;
-  font-size: 30px;
-  font-family: 'Times New Roman', Times, serif;
-}
-
-.boton-blancas {
-  color: rgba(255, 255, 255, 0);
-}
-
-.regresar {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  display: inline-flex;
-  padding: 15px;
-  font-size: 14px;
-  border: none;
-  border-radius: 40px;
-  background-color: rgba(240, 131, 35, 0);
-  color: rgb(255, 255, 255);
-  font-family: 'Times New Roman', Times, serif;
-}
-
-.regresar img {
-  width: 50px;
-  height: 50px;
+.logout-icon {
+  width: 30px;
 }
 
 .admin-container {
   display: flex;
-  flex-wrap: wrap;
-  border-radius: 10px;
-  margin-right: 50px;
-  align-items: center;
   justify-content: center;
-  cursor: pointer;
-  font-family: 'Times New Roman', Times, serif;
+  align-items: center;
+  margin-top: 50px;
+  position: relative;
+  overflow: hidden; 
 }
 
-.admin-container a {
+.admin-link {
   text-decoration: none;
-}
-
-.usuarios,
-.libros {
-  background-color: #f08323;
-  background-repeat: no-repeat;
-  background-position: top;
-  background-size: 75px;
-  color: white;
-  margin: 30px;
-  display: flex;
-  height: 200px;
-  width: 250px;
-  border-radius: 20px;
-  transition: transform 0.2s;
-  align-items: center;
-  font-size: 30px;
-  text-align: center;
-  justify-content: center;
-  cursor: pointer;
-  font-family: 'Times New Roman', Times, serif;
-  border-color: transparent;
-}
-
-.usuarios::before,
-.libros::before {
-  content: "";
-  display: none;
-  font-family: 'Times New Roman', Times, serif;
-}
-
-.header-bibliotek {
-  margin: 40px;
-}
-
-.header-bibliotek h2,
-hr {
-  color: white;
-  font-size: 55px;
-  text-align: center;
   margin-bottom: 20px;
-  font-family: 'Times New Roman', Times, serif;
 }
 
-@keyframes text-focus-in {
-  0% {
-    filter: blur(12px);
-    opacity: 0;
-  }
-  100% {
-    filter: blur(0);
-    opacity: 1;
-  }
+.admin-image {
+  position: fixed; /* Hacer que la imagen sea estática */
+  top: 0;
+  left: 0;
+  width: 1550px; /* Ancho de la imagen */
+  height: auto;
+  z-index: -1;
 }
+
+.admin-buttons {
+  background-color: 0px 8px 16px rgba(36, 63, 101, 0.2);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0px 8px 16px rgba(36, 63, 101, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1; /* Coloca los botones por encima de la imagen */
+}
+
+.admin-button {
+  margin: 10px 0; /* Espaciado entre botones */
+  padding: 20px 60px;
+  background-color: #ff5500;
+  color: #fff;
+  border: none;
+  border-radius: 100px 0 0 100px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0px 8px 16px rgba(255, 85, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  transform: skewX(-10deg);
+}
+
+.admin-button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: skewX(-45deg);
+  transition: left 0.3s;
+}
+
+.admin-button:hover:before {
+  left: 100%;
+}
+
+.admin-button:hover {
+  background-color: #e63a00;
+  transform: scale(1.05) skewX(-10deg);
+}
+
+.logout-link {
+  text-decoration: none;
+  color: #fff;
+}
+
+
+

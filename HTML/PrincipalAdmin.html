@@ -4,37 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BiblioTek</title>
+    <title>AdminTek - BiblioTek</title>
     <link rel="stylesheet" href="../CSS/PrincipalAdmin.css">
 </head>
 <body>
-    <header>
-        <img src="../IMÁGENES/Logo.png" alt="Logo de BiblioTek">
-        <div class="botones-container">
-            <button class="boton">BiblioTek</button>
+    <header class="admin-header">
+        <div class="logo-container">
+            <img src="../IMÁGENES/Logo.png" alt="Logo de BiblioTek" class="logo">
+            <h1 class="title-text">AdminTek</h1>
         </div>
+        <a class="logout-link" href="../HTML/LogIn.html">
+            <img src="../IMÁGENES/cerrar-sesion.png" alt="Cerrar sesión" class="logout-icon">
+        </a>
     </header>
-    <br>
-<br>
-<br>
-    <div class="header-bibliotek">
-        <h2>AdminTek</h2>
-        <hr>
-    </div>
-<br>
-<br>
-<br>
-    <div class="admin-container">
-        <a href="../HTML/AgregarUsuario.html">
-            <button class="usuarios" id="btnUsuarios">Usuarios</button>
-        </a>
-        <a href="../HTML/AgregarLibro.html">
-            <button class="libros" id="btnLibros">Libros</button>
-        </a>
-    </div>
 
-    <a class="regresar" href="../HTML/LogIn.html">
-        <img src="../IMÁGENES/cerrar-sesion.png" alt="Cerrar sesión">
-    </a>
+    <div class="admin-container">
+        <div class="admin-image">
+            <img src="../IMÁGENES/AdminTek.jpg" alt="Imagen temática" class="admin-image">
+        </div>
+        <div class="admin-buttons">
+            <a href="../HTML/AgregarUsuario.html" class="admin-link">
+                <button class="admin-button usuarios">Gestionar Usuarios</button>
+            </a>
+            <a href="../HTML/AgregarLibro.html" class="admin-link">
+                <button class="admin-button libros">Gestionar Libros</button>
+            </a>
+        </div>
+        <div class="back-button-container">
+            <a href="../index.html" class="back-button">Regresar</a>
+        </div>
+    </div>
 </body>
 </html>
+
+
+
