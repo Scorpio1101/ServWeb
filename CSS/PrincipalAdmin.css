@@ -73,7 +73,7 @@ body {
   position: fixed; /* Hacer que la imagen sea estática */
   top: 0;
   left: 0;
-  width: 1550px; /* Ancho de la imagen */
+  width: 100%; /* Ancho de la imagen */
   height: auto;
   z-index: -1;
 }
