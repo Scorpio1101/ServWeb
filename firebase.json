@@ -1,10 +1,11 @@
 {
   "hosting": {
-  "public": ".",
-  "rewrites": [
-    {
-      "source": "**",
-      "destination": "/index.html"
-    }
-  ]
+    "public": ".",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/HTML/login.html"
+      }
+    ]
+  }
 }
