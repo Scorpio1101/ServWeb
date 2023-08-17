@@ -1,24 +1,10 @@
 {
   "hosting": {
-    "public": ".",
+    "public": "./",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "!/HTML/login.html",  
-        "destination": "/HTML/login.html"
-      },
-      {
-        "source": "!/JS/firebase.js",  
-        "destination": "/JS/firebase.js"
-      },
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
     ]
   }
 }
