@@ -8,9 +8,10 @@
     ],
     "rewrites": [
       {
-        "source": "**",
-        "destination": "/index.html/HTML/LogIn.html"
+        "source": "!/login/**",  
+        "destination": "/index.html"
       }
     ]
   }
 }
+
