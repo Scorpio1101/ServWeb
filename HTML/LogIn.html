@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogIn</title>
+    <link rel="stylesheet" href="../CSS/PrincipalUsuario.css">
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/styles.css">
+    <title>BiblioTek - Inicio de Sesión</title>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <img src="../IMÁGENES/Logo.png" alt="Logo" class="logo">
+            <h1 class="login-heading">¡Bienvenido a BiblioTek!</h1>
+            <p class="login-subheading">Accede a tu cuenta para explorar nuestra biblioteca virtual</p>
+            <div class="additional-container">
+            <div class="login-form">
+                <h1 style="font-size: 32px;color: black;">LogIn</h1>
+                <div class="login-input-container">
+                    <input type="email" placeholder="Correo electrónico" class="login-input" id="email">
+                </div>
+                <div class="login-input-container">
+                    <input type="password" placeholder="Contraseña" class="login-input" id="password">
+                </div>
+                <div class="login-button-container">
+                    <button class="login-button" onclick="login()">Ingresar</button>
+                </div>
+                <div class="login-links">
+                    <a href="../HTML/Recuperacion.html" class="login-link">¿Olvidaste tu Contraseña?</a>
+                    <a href="../HTML/Registro.html" class="login-link">Registrate</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<!-- The core Firebase JS SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+<!-- SDKs for Firebase products -->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+<!-- Our script must be loaded after firebase references -->
+<script src="../JS/firebase.js"></script>
+
+</html>
