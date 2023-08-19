@@ -1,0 +1,107 @@
+/* Estilos generales */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #2b2b2b;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* Estilos para el contenedor */
+.container {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 50px;
+    border-radius: 10px;
+    width: 500px;
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+/* Estilos para el formulario */
+.login-form {
+    text-align: center;
+}
+
+.login-form a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.login-form h1 {
+    font-size: 45px;
+    margin-bottom: 30px;
+}
+
+/* Estilos para el logo */
+.login-form img {
+    max-width: 150px; /* Ajusta el tamaño del logo según tu preferencia */
+    margin-bottom: 30px;
+}
+
+/* Estilos para los botones */
+.botones-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+}
+
+.boton {
+    background-color: #ff5500;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 13px 30px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 15px;
+}
+
+.boton:hover {
+    background-color: #ff784d;
+}
+
+/* Estilos para la información del perfil */
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-info img {
+    width: 60px;
+    margin-bottom: 10px;
+}
+
+.profile-info h2 {
+    font-size: 30px;
+    margin: 0;
+}
+
+.profile-info p {
+    margin: 20px 0;
+}
+
+.back-button-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+}
+
+.back-button {
+    padding: 12px 20px;
+    background-color: #243f65;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #ff784d;
+}

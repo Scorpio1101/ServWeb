@@ -5,46 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
-    <link rel="stylesheet" href="../CSS/PrincipalUsuario.css">
+    <link rel="stylesheet" href="../CSS/Perfil.css">
 </head>
 <body>
-    <header>
-        <div class="volver-container">
-            <a href="javascript:history.go(-1)">
-                <img src="../IMÁGENES/volver.png" alt="Botón Volver">
-            </a>
-        </div>
-        <a href="../HTML/PrincipalUsuario.html">
-            <img src="../IMÁGENES/Logo.png">
-        </a>
-        <div class="botones-container">
-            <button class="boton">My Books</button>
-        </div>        
-    </header> 
-    <nav class="sidebar">
-        <a class="sidebar-link" href="../HTML/EditarUsuario.html">
-            <img src="/IMÁGENES/usuario-de-perfil.png">
-            <div>Editar</div>
-        </a>
-        <a class="regresar" href="../HTML/LogIn.html">
-            <img src="../IMÁGENES/cerrar-sesion.png" alt="">
-        </a>
-    </nav>
-    <div class="content">
-        <nav class="sidebarL">
+    <div class="container">
             <div class="login-form">
                 <form>
+                    <a href="../HTML/PrincipalUsuario.html">
+                        <img src="../IMÁGENES/Logo.png">
+                    </a>
                     <h1>BiblioTek</h1>
-                    <div class="profile-info">
-                      <img src="../" alt="Imagen de perfil">
-                      <h2>Nombre de usuario</h2>
-                      <br>
-                      <p>Correo electrónico: </p>
+                    <div class="botones-container">
+                        <button class="boton">My Books</button>
                     </div>
-                  </form>
-                  
+                    <div class="profile-info">
+                        <img src="../IMÁGENES/usuario-de-perfil.png" alt="Imagen de perfil">
+                        <h2>Nombre de usuario</h2>
+                        <p>Correo electrónico:</p>
+                    </div>
+                    
+                </form>
             </div>
-        </nav>
+        </nav> 
+    </div>
+    <div class="back-button-container">
+        <a href="../HTML/PrincipalUsuario.html" class="back-button">Regresar</a>
     </div>
 </body>
 </html>
+
