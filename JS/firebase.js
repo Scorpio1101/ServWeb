@@ -190,3 +190,105 @@ function togglePasswordVisibility() {
     toggleButton.textContent = "Mostrar";
   }
 }
+
+database.ref("users").on("child_added", snapshot => {
+  const user = snapshot.val();
+
+  const newRow = document.createElement("tr");
+  newRow.innerHTML = `
+    <td>${user.first_name}</td>
+    <td>${user.last_name}</td>
+    <td>${user.roles}</td>
+    <td>${user.dni}</td>
+    <td>${user.email}</td>
+    <td>${user.password}</td>
+    <td>
+        <button class="btn btn-warning btn-sm edit" data-id="${snapshot.key}">Editar</button>
+        <button class="btn btn-danger btn-sm delete" data-id="${snapshot.key}">Eliminar</button>
+      </td>
+    `;
+
+  document.querySelector(".user-list").appendChild(newRow);
+});
+
+// Add event listeners for edit and delete buttons
+document.addEventListener("click", function (event) {
+  if (event.target.classList.contains("edit")) {
+    const userId = event.target.getAttribute("data-id");
+    // Redirigir a la página de edición con el ID del usuario en el parámetro de consulta
+    window.location.href = `../HTML/EditarUsuario.html?id=${userId}`;
+
+    // Implement the logic to edit user data and save it back to the database
+  } else if (event.target.classList.contains("delete")) {
+    const userId = event.target.getAttribute("data-id");
+
+    // Delete the user data from the Firebase Realtime Database
+    database.ref("users").child(userId).remove();
+
+    // Remove the row from the table immediately after deletion
+    event.target.closest("tr").remove();
+    console.log("Delete button clicked for user with ID:", userId);
+  }
+});
+
+// Evento que se dispara cuando la página se ha cargado completamente
+document.addEventListener("DOMContentLoaded", function () {
+  // Obtén el ID del usuario de la consulta de parámetros
+  const urlParams = new URLSearchParams(window.location.search);
+  const userId = urlParams.get("id");
+
+  // Obtén una referencia a los campos de edición en el HTML
+  const firstNameField = document.getElementById("first_name");
+  const lastNameField = document.getElementById("last_name");
+  const rolesField = document.getElementById("roles");
+  const dniField = document.getElementById("dni");
+  const emailField = document.getElementById("email");
+  const updateButton = document.getElementById("update-button");
+
+  // Obtén una referencia al elemento del botón de actualización
+
+  // Carga los datos actuales del usuario en los campos de edición
+  const userRef = database.ref("users/" + userId);
+  userRef.once("value", function (snapshot) {
+    const userData = snapshot.val();
+    if (userData) {
+      firstNameField.value = userData.first_name;
+      lastNameField.value = userData.last_name;
+      rolesField.value = userData.roles;
+      dniField.value = userData.dni;
+      emailField.value = userData.email;
+    }
+  });
+
+  // Agrega un evento click al botón de actualización
+  updateButton.addEventListener("click", function () {
+    // Obtén los valores de los campos de edición
+    const updatedFirstName = firstNameField.value;
+    const updatedLastName = lastNameField.value;
+    const updatedRoles = rolesField.value;
+    const updatedDni = dniField.value;
+    const updatedEmail = emailField.value;
+
+    // Crea un objeto con los datos actualizados
+    const updatedUserData = {
+      first_name: updatedFirstName,
+      last_name: updatedLastName,
+      roles: updatedRoles,
+      dni: updatedDni,
+      email: updatedEmail
+    };
+
+    // Actualiza los datos del usuario en la base de datos
+    userRef.update(updatedUserData)
+      .then(function () {
+        // Datos actualizados exitosamente
+        alert("Datos actualizados correctamente");
+        // Redirige a la página principal u otra ubicación después de la actualización
+        // window.location.href = "ruta_después_de_actualización";
+      })
+      .catch(function (error) {
+        // Ocurrió un error al actualizar los datos
+        alert("Error al actualizar los datos: " + error.message);
+      });
+  });
+});

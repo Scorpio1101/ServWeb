@@ -1,57 +1,46 @@
+<!-- SDKs for Firebase products -->
+<script src="../Js/firebase.js"></script>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar</title>
-    <link rel="stylesheet" href="../CSS/PrincipalUsuario.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Usuario</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+    integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
 </head>
 <body>
-    <header>
-        <div class="volver-container">
-            <a href="javascript:history.go(-1)">
-                <img src="../IMÁGENES/volver.png" alt="Botón Volver">
-            </a>
-        </div>
-        <a href="../HTML/PrincipalUsuario.html">
-            <img src="../IMÁGENES/Logo.png">
-        </a>
-        <div class="botones-container">
-            <button class="boton">Perfil</button>
-        </div>        
-    </header> 
-    <nav class="sidebar">
-        <a class="sidebar-link" href="../HTML/Perfil.html">
-            <img src="../IMÁGENES/usuario-de-perfil.png" alt="Usuario de perfil">
-            <div>Perfil</div>
-        </a>
-        <a class="regresar" href="../HTML/LogIn.html">
-            <img src="../IMÁGENES/cerrar-sesion.png" alt="Cerrar sesión">
-        </a>
-    </nav>
-    <div class="content">
-        <nav class="sidebarL">
-            <div class="login-form">
-                <form>
-                    <div class="edit-profile hidden">
-                        <h2>Editar perfil</h2>
-                        <br>
-                        <div class="profile-image">
-                            <label for="profile-image-upload">Imagen de perfil:</label>
-                            <input type="file" id="profile-image-upload">
-                        </div>
-                        <br>                      
-                        <input type="text" id="username" placeholder="Nombre de usuario" value="Nombre de usuario">
-                        <input type="email" id="email" placeholder="Correo electrónico" value="correo@example.com">
-                        <br>
-                        <br>
-                        <button class="save-button">Guardar cambios</button>
-                        <button class="cancel-button">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-        </nav>
+  <div class="container">
+    <h1>Editar Usuario</h1>
+    <div class="form-group">
+      <label for="first_name">Nombre</label>
+      <input type="text" id="first_name" class="form-control">
     </div>
+    <div class="form-group">
+      <label for="last_name">Apellidos</label>
+      <input type="text" id="last_name" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="roles">Tipo de usuario</label>
+      <select id="roles" class="form-control">
+        <option value="administrador">Administrador</option>
+        <option value="miembro">Miembro</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="dni">Cédula</label>
+      <input type="text" id="dni" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" class="form-control">
+    </div>
+    <button id="update-button" class="btn btn-primary">Actualizar</button>
+  </div>
 </body>
 </html>
