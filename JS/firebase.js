@@ -17,29 +17,29 @@ const auth = firebase.auth()
 const database = firebase.database()
 
 // Set up our register function
-  function register () {
-    // Obtén todos nuestros campos de entrada
-    email = document.getElementById('email').value
-    password = document.getElementById('password').value
-    first_name = document.getElementById('first_name').value
-    last_name = document.getElementById('last_name').value
-    dni = document.getElementById('dni').value
-    roles = document.getElementById('roles').value
+function register() {
+  // Obtén todos nuestros campos de entrada
+  email = document.getElementById('email').value
+  password = document.getElementById('password').value
+  first_name = document.getElementById('first_name').value
+  last_name = document.getElementById('last_name').value
+  dni = document.getElementById('dni').value
+  roles = document.getElementById('roles').value
 
-    // Valida los campos de entrada
-    if (validate_field(first_name) == false || validate_field(last_name) == false || validate_field(dni) == false){
-      alert('Debe rellenar los campos vacíos')
-      return
-    }
-    if (validate_email(email) == false || validate_password(password) == false) {
-      alert('Debe digitar un correo o contraseña válidos')
-      return
-      // No continúes ejecutando el código
-    }
+  // Valida los campos de entrada
+  if (validate_field(first_name) == false || validate_field(last_name) == false || validate_field(dni) == false) {
+    alert('Debe rellenar los campos vacíos')
+    return
+  }
+  if (validate_email(email) == false || validate_password(password) == false) {
+    alert('Debe digitar un correo o contraseña válidos')
+    return
+    // No continúes ejecutando el código
+  }
 
-    // Continúa con la autenticación
-    auth.createUserWithEmailAndPassword(email, password)
-    .then(function() {
+  // Continúa con la autenticación
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(function () {
       // Obtiene el usuario actual
       var user = auth.currentUser
 
@@ -48,12 +48,12 @@ const database = firebase.database()
 
       // Crea los datos del usuario
       var user_data = {
-        email : email,
-        first_name : first_name,
-        last_name : last_name,
-        last_login : Date.now(),
-        dni : dni,
-        roles : roles,
+        email: email,
+        first_name: first_name,
+        last_name: last_name,
+        last_login: Date.now(),
+        dni: dni,
+        roles: roles,
         password: password // Agrega el campo Contraseña
       }
 
@@ -64,14 +64,14 @@ const database = firebase.database()
       alert('Usuario creado satisfactoriamente!');
       //window.location.href = "../HTML/Login.html";
     })
-    .catch(function(error) {
+    .catch(function (error) {
       // Firebase utilizará esto para alertar de sus errores
       var error_code = error.code
       var error_message = error.message
 
       alert(error_message)
     })
-  }
+}
 
 
 // Set up our login function
@@ -162,5 +162,31 @@ function validate_field(field) {
     return false
   } else {
     return true
+  }
+}
+
+function generarContrasena() {
+  var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var longitud = 10;
+  var contrasena = "";
+
+  for (var i = 0; i < longitud; i++) {
+    var indice = Math.floor(Math.random() * caracteres.length);
+    contrasena += caracteres.charAt(indice);
+  }
+
+  document.getElementById("password").value = contrasena;
+}
+
+function togglePasswordVisibility() {
+  var passwordInput = document.getElementById("password");
+  var toggleButton = document.querySelector(".btn-toggle-password");
+
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+    toggleButton.textContent = "Ocultar";
+  } else {
+    passwordInput.type = "password";
+    toggleButton.textContent = "Mostrar";
   }
 }
