@@ -260,38 +260,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Agregar esta función para actualizar los datos del usuario
-function updateUser(userId) {
-  // Obtén los valores de los campos de edición
-  const updatedFirstName = document.getElementById("first_name").value;
-  const updatedLastName = document.getElementById("last_name").value;
-  const updatedRoles = document.getElementById("roles").value;
-  const updatedDni = document.getElementById("dni").value;
-  const updatedEmail = document.getElementById("email").value;
-
-  // Crea un objeto con los datos actualizados
-  const updatedUserData = {
-    first_name: updatedFirstName,
-    last_name: updatedLastName,
-    roles: updatedRoles,
-    dni: updatedDni,
-    email: updatedEmail,
-  };
-
-  // Actualiza los datos del usuario en la base de datos
-  const userRef = database.ref("users/" + userId);
-  userRef
-    .update(updatedUserData)
-    .then(function () {
-      // Datos actualizados exitosamente
-      alert("Datos actualizados correctamente");
-      // Redirige a la página principal u otra ubicación después de la actualización
-      // window.location.href = "ruta_después_de_actualización";
-    })
-    .catch(function (error) {
-      // Ocurrió un error al actualizar los datos
-      alert("Error al actualizar los datos: " + error.message);
-    });
-}
+  
 
 });
