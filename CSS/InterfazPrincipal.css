@@ -5,6 +5,12 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: white;
     color: #ffffff;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+    min-height: 100vh;
 }
 
 /* Estilos de la barra lateral */
@@ -77,54 +83,50 @@ body {
     margin-left: 5px;
 }
 
-/* Fondo de la tabla */
 .table {
-    background-color: #422c0b80;
-    border-radius: 10px;
-    margin-top: 20px;
-    overflow: hidden;
-    margin-left: auto; /* Establecer el margen izquierdo a 'auto' */
-    margin-right: 80px; /* Establecer el margen derecho a 'auto' */
-    width: 70%; 
-    border-radius: 3%;
+    background-color: #000000; 
+    color: #ffffff; 
+    border-radius: 15px;
+    margin: 0 auto; 
+    width: fit-content;
+    height: fit-content;
+    border-collapse: collapse;
 }
+
 .container {
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 40px;
+    background-color: rgba(0, 0, 0, 0.8); 
     border-radius: 10px;
     box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
-    margin: 100px auto;
+    padding: 100px;
+    width: 90%; /* Ajustar el ancho según sea necesario */
+    max-width: 800px;
+    margin-left: 400px;
+    margin-right: 100px;
 }
 
-/* Encabezados de la tabla */
-.table thead {
-    background-color: #ff5500bc;
-}
-
-.table thead th {
-    border: none;
-    padding: 12px;
-}
-
-/* Celdas de la tabla */
-.table tbody td {
+/* Estilos para los encabezados de la tabla */
+.table th {
+    background-color: #243f65;
     color: white;
+    padding: 12px;
+    text-align: center;
+}
+
+/* Estilos para las celdas de la tabla */
+.table td {
     padding: 10px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center; 
 }
 
 /* Enlace de la imagen */
-.table tbody td a {
+.table td a {
     display: inline-block;
+    color: #ff5500; /* Cambiar el color del enlace */
+    text-decoration: none; /* Quitar la subrayado */
+    font-weight: bold;
 }
 
 /* Hover sobre las filas */
 .table tbody tr:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: #f2f2f2; /* Cambiar el color de fondo al hacer hover */
 }
-
-.table {
-    background-color: rgba(0, 0, 0, 0.8);
-    border: none;
-    color: #ffffff;
-  }
