@@ -1,5 +1,13 @@
+<!-- SDKs for Firebase products -->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-storage.js"></script>
+<script src="../Js/firebase.js"></script>
+
 <!DOCTYPE html>
 <html lang="es">
+  
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,10 +57,13 @@
         <label for="imagen">Imagen:</label>
         <input type="file" class="form-control-file" id="imagen" name="imagen">
       </div>
-      <button class="btn btn-primary" id="btnGuardar">Guardar</button>
+      <button class="btn btn-primary" id="btnGuardar" onclick="UploadProcess()">Guardar</button>
     </div>
   </div>
 </body>
+
+<script src="../Js/firebase.js"></script>
+
 </html>
 
 

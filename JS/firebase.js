@@ -15,8 +15,9 @@ firebase.initializeApp(firebaseConfig);
 // Initialize variables
 const auth = firebase.auth()
 const database = firebase.database()
+const storage = firebase.storage()
 
-// Set up our register function
+// Registro
 function register() {
   // Obtén todos nuestros campos de entrada
   email = document.getElementById('email').value
@@ -74,7 +75,7 @@ function register() {
 }
 
 
-// Set up our login function
+// Login
 function login() {
   // Obtén todos los campos de entrada
   var email = document.getElementById('email').value;
@@ -130,7 +131,7 @@ function login() {
 }
 
 
-// Validate Functions
+// Funciones de validación
 function validate_email(email) {
   expression = /^[^@]+@\w+(\.\w+)+\w$/
   if (expression.test(email) == true) {
@@ -143,6 +144,7 @@ function validate_email(email) {
 }
 
 
+//Funciones para validar Password
 function validate_password(password) {
   // Firebase only accepts lengths greater than 6
   if (password < 6) {
@@ -153,6 +155,7 @@ function validate_password(password) {
 }
 
 
+//Funciones para validar Espacios
 function validate_field(field) {
   if (field == null) {
     return false
@@ -166,6 +169,7 @@ function validate_field(field) {
 }
 
 
+//Funcion para generar contraseñas aleatorias
 function generarContrasena() {
   var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   var longitud = 10;
@@ -180,6 +184,7 @@ function generarContrasena() {
 }
 
 
+//Funcion para ver o no la contraseña
 function togglePasswordVisibility() {
   var passwordInput = document.getElementById("password");
   var toggleButton = document.querySelector(".btn-toggle-password");
@@ -216,7 +221,7 @@ database.ref("users").on("child_added", snapshot => {
 });
 
 
-//Consulta información de la BD Usuarios.  -Se usa en Perfil.html-
+//Consulta información de la BD Usuarios.  -Se usa en Perfil.html-    **Revisar acá**
 document.addEventListener("DOMContentLoaded", function () {
   const userNameElement = document.querySelector("h2");
   const userEmailElement = document.querySelector("p");
@@ -296,3 +301,110 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+
+//Para guardar libros en FB
+async function UploadProcess() {
+  var FileToUpload = document.getElementById("imagen").files[0]; // Get selected file
+  var FileName = FileToUpload.name; // Use the file's original name
+  const metaData = {
+    contentType: FileToUpload.type,
+  };
+
+  const storageRef = storage.ref("Documentos/" + FileName);
+
+  const uploadTask = storageRef.put(FileToUpload, metaData);
+
+  uploadTask.on(
+    "state_changed",
+    (snapshot) => {
+      // Handle upload progress if needed
+    },
+    (error) => {
+      alert("Problema para subir la imagen");
+    },
+    async () => {
+      // Get the download URL of the uploaded image
+      const downloadURL = await storageRef.getDownloadURL();
+      console.log("Download URL:", downloadURL);
+
+      // Get book details from the form
+      const nombre = document.getElementById("nombre").value;
+      const autor = document.getElementById("autor").value;
+      const anno = parseInt(document.getElementById("anno").value);
+      const precio = parseFloat(document.getElementById("precio").value);
+      const tipo = document.getElementById("tipo").value;
+
+      // Create a new book object
+      const bookData = {
+        nombre: nombre,
+        autor: autor,
+        anno: anno,
+        precio: precio,
+        tipo: tipo,
+        imagenUrl: downloadURL
+      };
+
+      // Store the book data in the Firebase Realtime Database
+      const newBookRef = database.ref("books").push();
+      newBookRef.set(bookData); // Store book data
+
+      console.log("Book data stored in the database.");
+      alert("Libro guardado exitosamente.");
+      window.location.href = "../HTML/PrincipalALibros.html";
+
+
+      document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("editar")) {
+          const bookId = event.target.getAttribute("data-id");
+
+          // Here, you can implement your logic to show an edit form or take any other action you want.
+          // You can use the bookId to identify the book you want to edit.
+          console.log("Edit button clicked for book with ID:", bookId);
+        }
+      });
+      document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("eliminar")) {
+          const bookId = event.target.getAttribute("data-id");
+
+          // Delete the book data from the Firebase Realtime Database
+          database.ref("books").child(bookId).remove();
+
+          // You might also want to remove the row from the table immediately after deletion.
+          event.target.closest("tr").remove();
+          console.log("Delete button clicked for book with ID:", bookId);
+        }
+      });
+
+      // Fetch and display all books
+      database.ref("books").once("value", (snapshot) => {
+        const bookList = document.getElementById("bookList");
+        bookList.innerHTML = ""; // Clear previous content
+
+        snapshot.forEach((bookSnapshot) => {
+          const book = bookSnapshot.val();
+
+          const newRow = document.createElement("tr");
+          newRow.innerHTML = `
+          <td>${book.nombre}</td>
+          <td>${book.autor}</td>
+          <td>${book.anno}</td>
+          <td>${book.precio}</td>
+          <td>${book.tipo}</td>
+          <td>
+            <button class="btn btn-sm btn-warning editar" data-id="${bookSnapshot.key}" style="color: white;">Editar</button>
+            <button class="btn btn-sm btn-danger eliminar" data-id="${bookSnapshot.key}" style="color: white;">Eliminar</button>
+          </td>
+        `;
+
+          bookList.appendChild(newRow);
+        });
+      });
+      // Add an event listener for the "Editar" button
+
+    }
+  );
+}
+document.getElementById("btnGuardar").addEventListener("click", UploadProcess);
+
+
