@@ -84,49 +84,48 @@ body {
 }
 
 .table {
-    background-color: #000000; 
-    color: #ffffff; 
+    background-color: #ffffff; 
+    color: #333333; 
     border-radius: 15px;
     margin: 0 auto; 
-    width: fit-content;
-    height: fit-content;
-    border-collapse: collapse;
+    width: 90%; 
+    max-width: 800px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3); 
+    border-collapse: collapse; 
 }
 
 .container {
-    background-color: rgba(0, 0, 0, 0.8); 
-    border-radius: 10px;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+    background-color: transparent; 
     padding: 100px;
-    width: 90%; /* Ajustar el ancho según sea necesario */
+    width: 90%; 
     max-width: 800px;
     margin-left: 400px;
     margin-right: 100px;
 }
 
-/* Estilos para los encabezados de la tabla */
 .table th {
     background-color: #243f65;
-    color: white;
-    padding: 12px;
+    color: #ffffff;
+    padding: 20px;
     text-align: center;
+    font-size: 18px;
 }
 
-/* Estilos para las celdas de la tabla */
 .table td {
-    padding: 10px 20px;
-    text-align: center; 
+    padding: 15px 40px;
+    text-align: center;
+    font-size: 16px; 
 }
 
 /* Enlace de la imagen */
 .table td a {
     display: inline-block;
-    color: #ff5500; /* Cambiar el color del enlace */
-    text-decoration: none; /* Quitar la subrayado */
+    color: #ff5500;
+    text-decoration: none;
     font-weight: bold;
 }
 
 /* Hover sobre las filas */
 .table tbody tr:hover {
-    background-color: #f2f2f2; /* Cambiar el color de fondo al hacer hover */
+    background-color: #f2f2f2;
 }
