@@ -1,0 +1,131 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: #1e1e1e;
+    font-family: Arial, sans-serif;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  header img {
+    width: 80px;
+    margin-right: 10px;
+    cursor: pointer;
+    display: flex;
+  align-items: center;
+  }
+  
+  .botones-container {
+    display: inline-block;
+    margin-left: 10px;
+  }
+  
+  .title-text {
+    font-size: 24px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+  }
+  
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px);
+  }
+  
+  .login-form {
+    background-color: #444;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .login-form h1 {
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  
+  .inputs input,
+  .inputs button {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: none;
+    font-size: 18px;
+    border-radius: 5px;
+    background-color: #f08323;
+    color: #fff;
+  }
+  
+  .inputs input::placeholder {
+    color: #ccc;
+  }
+  
+  .inputs button {
+    background-color: #243f65;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .inputs button:hover {
+    background-color: #422C0B;
+  }
+  
+  .olvidar a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    margin-top: 20px;
+    transition: color 0.3s ease;
+  }
+  
+  .olvidar a:hover {
+    color: #ff5733;
+  }
+  
+  .mensaje-error {
+    color: #ff3215;
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
+  .back-button-container {
+    position: fixed;
+    bottom: 20px; 
+    left: 20px; 
+  }
+  
+  .back-button {
+    padding: 12px 20px;
+    background-color: #ff5500;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .back-button:hover {
+    background-color: #ff784d;
+  }  
+  
