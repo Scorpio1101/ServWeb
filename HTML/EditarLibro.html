@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
+  
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AdminTek - BiblioTek</title>
-  <link rel="stylesheet" href="../CSS/EditarLibro.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+    integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  <link rel="stylesheet" href="../CSS/AgregarLibros.css">
 </head>
 <body>
-    <div class="container">
-      <h1>Editar Libro</h1>
+    <div class="volver-container">
+
+        <a href="javascript:history.go(-1)" class="back-button">
+            Regresar
+        </a>
+
+        <a href="../HTML/PrincipalALibros.html">
+          <img src="../IMÁGENES/Logo.png" alt="Logo" class="logo">
+        </a>
+
+    <h1 class="heading">Agregar Libros</h1>
+  </header>
       <div class="form-group m-4">
         <label for="nombre">Nombre:</label>
         <input type="text" class="form-control" id="nombre" name="nombre">
@@ -34,20 +47,19 @@
         </select>
       </div>
       <div class="form-group m-4">
-        <label for="imagen">Imagen:</label>
-        <input type="file" class="form-control-file" id="imagen" name="imagen">
+        <div class="form-group m-4">
+          <label for="imagen">Imagen:</label>
+          <input type="file" class="form-control-file" id="imagen" name="imagen">
       </div>
+      
       <div class="form-group m-4">
-        <label for="documento">Documento:</label>
-        <input type="file" class="form-control-file" id="documento" name="documento">
-    </div>
-      <button class="btn btn-primary" id="btnGuardar" onclick="updateBook()">Actualizar</button>
-    </div>
-  </div>
-  </div>
-  <div class="back-button-container">
-    <a href="../HTML/AdministrarLibros.html" class="back-button">Regresar</a>
-</div>
+          <label for="documento">Documento:</label>
+          <input type="file" class="form-control-file" id="documento" name="documento">
+      </div>
+      
+      <button class="btn btn-primary" id="btnGuardar" onclick="UploadProcess()">Agregar</button>
+      </div>
+      </div>
 </body>
 
 <!-- Firebase JS SDK -->
