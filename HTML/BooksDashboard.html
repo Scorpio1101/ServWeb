@@ -62,7 +62,6 @@
                 <th>Año</th>
                 <th>Estado</th>
                 <th>Tipo</th>
-                <th>Favorito</th>
             </tr>
         </thead>
         <tbody class="book-list">
@@ -127,7 +126,7 @@
                     <td>${book.anno}</td>
                     <td>${book.precio}</td>
                     <td>${book.tipo}</td>
-                    <td><button onclick="toggleFavorite('${snapshot.key}', this)">${book.favorito ? 'Eliminar de Favoritos' : 'Agregar a Favoritos'}</button></td>
+                    
                 `;
 
                 // Añadir la nueva fila a la tabla
