@@ -37,6 +37,10 @@
         <label for="imagen">Imagen:</label>
         <input type="file" class="form-control-file" id="imagen" name="imagen">
       </div>
+      <div class="form-group m-4">
+        <label for="documento">Documento:</label>
+        <input type="file" class="form-control-file" id="documento" name="documento">
+    </div>
       <button class="btn btn-primary" id="btnGuardar" onclick="updateBook()">Actualizar</button>
     </div>
   </div>
@@ -125,7 +129,7 @@
           // Datos actualizados exitosamente
           alert("Datos del libro actualizados correctamente");
           // Redirige a la página principal de libros u otra ubicación después de la actualización
-          // window.location.href = "ruta_después_de_actualización";
+          window.location.href = "/HTML/PrincipalALibros.html"
         })
         .catch(function (error) {
           // Ocurrió un error al actualizar los datos

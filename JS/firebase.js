@@ -304,7 +304,7 @@ async function UploadProcess() {
 
     console.log("Book data stored in the database.");
     alert("Libro guardado exitosamente.");
-    window.location.href = "../HTML/PrincipalALibros.html";
+    window.location.href = "/HTML/PrincipalALibros.html";
   } catch (error) {
     console.error("Hubo un error subiendo los archivos:", error);
     alert("Problema al subir los archivos.");
