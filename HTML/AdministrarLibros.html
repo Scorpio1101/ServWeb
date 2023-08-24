@@ -4,44 +4,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AdminTek - BiblioTek</title>
+  <title>Usuarios</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
     integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
   <link rel="stylesheet" href="../CSS/AdminUsuarios.css">
 </head>
 
 <body>
-    <div class="container">
-        <h1>Administra los libros de BiblioTek</h1>
-
-<table class="table text-white m-4">
-    <thead>
-      <tr>
-        <th for="Nombre" style="color: white;">Nombre</th>
-        <th for="Autor" style="color: white;">Autor</th>
-          <th for="Año" style="color: white;">Año</th>
-            <th for="Precio" style="color: white;">Precio</th>
-              <th for="Tipo" style="color: white;">Tipo</th>
-                <th for="Acciones" style="color: white;">Acciones</th>
-      </tr>
-    </thead>
-    <tbody id="bookList" class="product-list">
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>
-          <button class="btn btn-sm btn-warning editar" data-id="${producto.id}" style="color: white;">Editar</button>
-          <button class="btn btn-sm btn-danger eliminar" data-id="${producto.id}" style="color: white;">Eliminar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-<div class="back-button-container">
+  <div class="container">
+    <h1>Administra los libros de BiblioTek</h1>
+    <div class="col-12 mt-5">
+      <table class="table text-white m-4">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Autor</th>
+            <th>Año</th>
+            <th>Precio</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="book-list">
+          <!-- Los libros se cargarán aquí desde Firebase -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="back-button-container">
     <a href="../HTML/PrincipalALibros.html" class="back-button">Regresar</a>
-</div>
+  </div>
+
+  <!-- Firebase JS SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+
+  <script>
+    // Configuración de Firebase
+    var firebaseConfig = {
+      apiKey: "AIzaSyAUuOzPZ1k3-YKMtQzO1AX9XE_hUgS0LhA",
+      authDomain: "bibliotek-6aa3f.firebaseapp.com",
+      databaseURL: "https://bibliotek-6aa3f-default-rtdb.firebaseio.com",
+      projectId: "bibliotek-6aa3f",
+      storageBucket: "bibliotek-6aa3f.appspot.com",
+      messagingSenderId: "459978600030",
+      appId: "1:459978600030:web:ccd097da5ab5c2c72a4ecf"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Referencia a la base de datoss
+    const database = firebase.database();
+
+    // Función para cargar libros desde Firebase
+    function loadBooks() {
+      database.ref("books").on("child_added", snapshot => {
+        const book = snapshot.val();
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+                  <td>${book.nombre}</td>
+                  <td>${book.autor}</td>
+                  <td>${book.anno}</td>
+                  <td>${book.precio}</td>
+                  <td>${book.tipo}</td>
+                  <td>
+                      <button class="btn btn-warning btn-sm edit" data-id="${snapshot.key}">Editar</button>
+                      <button class="btn btn-danger btn-sm delete" data-id="${snapshot.key}">Eliminar</button>
+                  </td>
+              `;
+
+        document.querySelector(".book-list").appendChild(newRow);
+      });
+    }
+
+    // Llamar a la función loadBooks cuando se cargue el documento
+    document.addEventListener("DOMContentLoaded", loadBooks);
+
+    // Funcionalidad para los botones Editar y Eliminar
+    document.addEventListener("click", function (event) {
+      if (event.target.classList.contains("edit")) {
+        const bookId = event.target.getAttribute("data-id");
+        window.location.href = `../HTML/EditarLibro.html?id=${bookId}`;
+      } else if (event.target.classList.contains("delete")) {
+        const bookId = event.target.getAttribute("data-id");
+        database.ref("books").child(bookId).remove();
+        event.target.closest("tr").remove();
+        console.log("Delete button clicked for book with ID:", bookId);
+      }
+    });
+  </script>
 </body>

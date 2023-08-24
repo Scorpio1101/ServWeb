@@ -220,26 +220,6 @@ database.ref("users").on("child_added", snapshot => {
   document.querySelector(".user-list").appendChild(newRow);
 });
 
-//Consulta todos los usuarios en BD.  -Se usa en AdministrarUsuarios.html-
-document.addEventListener("click", function (event) {
-  if (event.target.classList.contains("edit")) {
-    const userId = event.target.getAttribute("data-id");
-    // Redirigir a la página de edición con el ID del usuario en el parámetro de consulta
-    window.location.href = `../HTML/EditarUsuario.html?id=${userId}`;
-
-    // Implement the logic to edit user data and save it back to the database
-  } else if (event.target.classList.contains("delete")) {
-    const userId = event.target.getAttribute("data-id");
-
-    // Delete the user data from the Firebase Realtime Database
-    database.ref("users").child(userId).remove();
-
-    // Remove the row from the table immediately after deletion
-    event.target.closest("tr").remove();
-    console.log("Delete button clicked for user with ID:", userId);
-  }
-});
-
 
 //Permite modificar el Usuario en la BD  -Se usa en EditarUsuario.html
 document.addEventListener("DOMContentLoaded", function () {
@@ -275,6 +255,7 @@ document.addEventListener("DOMContentLoaded", function () {
 //Para guardar libros en FB
 async function UploadProcess() {
   var FileToUpload = document.getElementById("imagen").files[0]; // Get selected file
+  const docFile = document.getElementById("documento").files[0];
   var FileName = FileToUpload.name; // Use the file's original name
   const metaData = {
     contentType: FileToUpload.type,
@@ -375,5 +356,4 @@ async function UploadProcess() {
   );
 }
 document.getElementById("btnGuardar").addEventListener("click", UploadProcess);
-
 
