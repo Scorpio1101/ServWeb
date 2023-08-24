@@ -2,33 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BiblioTek</title>
-    <link rel="stylesheet" href="../CSS/PrincipalUsuario.css">
+    <link rel="stylesheet" href="../CSS/InterfazPrincipal.css">
 </head>
 <body>
-    <header>
-        <img src="../IMÁGENES/Logo.png">
-        <div class="botones-container">
-            <button class="boton">BiblioTek</button>
-            <a href="../HTML/PrincipalUsuario.html">
+    <div class="sidebar">
+        <div class="logo-container">
+            <img src="../IMÁGENES/Logo.png" alt="BiblioTek Logo" class="logo">
+            <h1 class="heading">BiblioTek</h1>
         </div>
-    </header>
-    <nav class="sidebar">
-        <a class="sidebar-link" href="../HTML/Perfil.html">
-            <img src="/IMÁGENES/usuario-de-perfil.png">
-            <div>Cuenta</div>
-        </a>
-        <a class="sidebar-links" href="/HTML/BooksDashboard.html">
-            <div>Books Dashboard</div>
-        </a>
-        <a class="sidebar-linkss" href="/html/MyBooks.html">
-            <div>My Books</div>
-        </a>
-        <a class="regresar" href="../HTML/LogIn.html">
-            <img src="../IMÁGENES/cerrar-sesion.png" alt="">
-        </a>
-    </nav>
+        <nav class="nav-links">
+            <a class="sidebar-link" href="../HTML/Perfil.html">
+                <img src="../IMÁGENES/usuario-de-perfil.png" alt="Perfil">
+                <span>Mi Cuenta</span>
+            </a>
+            <a class="sidebar-link" href="../HTML/Explora.html">
+                <img src="../IMÁGENES/wpexplorer.svg" alt="Biblioteca">
+                <span>Explora</span>
+            </a>
+            <a class="sidebar-link" href="../HTML/BooksDashboard.html">
+                <img src="../IMÁGENES/books.svg" alt="Biblioteca">
+                <span>Biblioteca</span>
+            </a>
+            <a class="sidebar-link" href="../HTML/MyBooks.html">
+                <img src="../IMÁGENES/libro.svg" alt="Mis Libros">
+                <span>Mis Libros</span>
+            </a>
+            <a class="sidebar-link" href="../HTML/LogIn.html">
+                <img src="../IMÁGENES/cerrar-sesion.png" alt="Mis Libros">
+                <span>SignOut</span>
+            </a>
+        </nav>
+    </div>
 </body>
 </html>
+
+
