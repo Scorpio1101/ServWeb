@@ -220,26 +220,6 @@ database.ref("users").on("child_added", snapshot => {
   document.querySelector(".user-list").appendChild(newRow);
 });
 
-//Consulta todos los usuarios en BD.  -Se usa en AdministrarUsuarios.html-
-document.addEventListener("click", function (event) {
-  if (event.target.classList.contains("edit")) {
-    const userId = event.target.getAttribute("data-id");
-    // Redirigir a la página de edición con el ID del usuario en el parámetro de consulta
-    window.location.href = `../HTML/EditarUsuario.html?id=${userId}`;
-
-    // Implement the logic to edit user data and save it back to the database
-  } else if (event.target.classList.contains("delete")) {
-    const userId = event.target.getAttribute("data-id");
-
-    // Delete the user data from the Firebase Realtime Database
-    database.ref("users").child(userId).remove();
-
-    // Remove the row from the table immediately after deletion
-    event.target.closest("tr").remove();
-    console.log("Delete button clicked for user with ID:", userId);
-  }
-});
-
 
 //Permite modificar el Usuario en la BD  -Se usa en EditarUsuario.html
 document.addEventListener("DOMContentLoaded", function () {
@@ -274,106 +254,64 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //Para guardar libros en FB
 async function UploadProcess() {
-  var FileToUpload = document.getElementById("imagen").files[0]; // Get selected file
-  var FileName = FileToUpload.name; // Use the file's original name
-  const metaData = {
-    contentType: FileToUpload.type,
+  const imageFile = document.getElementById("imagen").files[0];
+  const docFile = document.getElementById("documento").files[0];
+
+  const imageFileName = imageFile.name;
+  const docFileName = docFile.name;
+
+  const imageMetaData = {
+    contentType: imageFile.type,
   };
 
-  const storageRef = storage.ref("Documentos/" + FileName);
+  const docMetaData = {
+    contentType: docFile.type,
+  };
 
-  const uploadTask = storageRef.put(FileToUpload, metaData);
+  const imageStorageRef = storage.ref("Imágenes/" + imageFileName);
+  const docStorageRef = storage.ref("Documentos/" + docFileName);
 
-  uploadTask.on(
-    "state_changed",
-    (snapshot) => {
-      // Handle upload progress if needed
-    },
-    (error) => {
-      alert("Problema para subir la imagen");
-    },
-    async () => {
-      // Get the download URL of the uploaded image
-      const downloadURL = await storageRef.getDownloadURL();
-      console.log("Download URL:", downloadURL);
+  try {
+    await imageStorageRef.put(imageFile, imageMetaData);
+    await docStorageRef.put(docFile, docMetaData);
 
-      // Get book details from the form
-      const nombre = document.getElementById("nombre").value;
-      const autor = document.getElementById("autor").value;
-      const anno = parseInt(document.getElementById("anno").value);
-      const precio = parseFloat(document.getElementById("precio").value);
-      const tipo = document.getElementById("tipo").value;
+    const imageUrl = await imageStorageRef.getDownloadURL();
+    const docUrl = await docStorageRef.getDownloadURL();
 
-      // Create a new book object
-      const bookData = {
-        nombre: nombre,
-        autor: autor,
-        anno: anno,
-        precio: precio,
-        tipo: tipo,
-        imagenUrl: downloadURL
-      };
+    console.log("URL de la imagen:", imageUrl);
+    console.log("URL del documento:", docUrl);
 
-      // Store the book data in the Firebase Realtime Database
-      const newBookRef = database.ref("books").push();
-      newBookRef.set(bookData); // Store book data
+    // Get book details from the form
+    const nombre = document.getElementById("nombre").value;
+    const autor = document.getElementById("autor").value;
+    const anno = parseInt(document.getElementById("anno").value);
+    const precio = parseFloat(document.getElementById("precio").value);
+    const tipo = document.getElementById("tipo").value;
 
-      console.log("Book data stored in the database.");
-      alert("Libro guardado exitosamente.");
-      window.location.href = "../HTML/PrincipalALibros.html";
+    // Create a new book object
+    const bookData = {
+      nombre: nombre,
+      autor: autor,
+      anno: anno,
+      precio: precio,
+      tipo: tipo,
+      imagenUrl: imageUrl,
+      docUrl: docUrl // This is the new field for the document URL
+    };
 
+    // Store the book data in the Firebase Realtime Database
+    const newBookRef = database.ref("books").push();
+    await newBookRef.set(bookData);
 
-      document.addEventListener("click", function (event) {
-        if (event.target.classList.contains("editar")) {
-          const bookId = event.target.getAttribute("data-id");
-
-          // Here, you can implement your logic to show an edit form or take any other action you want.
-          // You can use the bookId to identify the book you want to edit.
-          console.log("Edit button clicked for book with ID:", bookId);
-        }
-      });
-      document.addEventListener("click", function (event) {
-        if (event.target.classList.contains("eliminar")) {
-          const bookId = event.target.getAttribute("data-id");
-
-          // Delete the book data from the Firebase Realtime Database
-          database.ref("books").child(bookId).remove();
-
-          // You might also want to remove the row from the table immediately after deletion.
-          event.target.closest("tr").remove();
-          console.log("Delete button clicked for book with ID:", bookId);
-        }
-      });
-
-      // Fetch and display all books
-      database.ref("books").once("value", (snapshot) => {
-        const bookList = document.getElementById("bookList");
-        bookList.innerHTML = ""; // Clear previous content
-
-        snapshot.forEach((bookSnapshot) => {
-          const book = bookSnapshot.val();
-
-          const newRow = document.createElement("tr");
-          newRow.innerHTML = `
-          <td>${book.nombre}</td>
-          <td>${book.autor}</td>
-          <td>${book.anno}</td>
-          <td>${book.precio}</td>
-          <td>${book.tipo}</td>
-          <td>
-            <button class="btn btn-sm btn-warning editar" data-id="${bookSnapshot.key}" style="color: white;">Editar</button>
-            <button class="btn btn-sm btn-danger eliminar" data-id="${bookSnapshot.key}" style="color: white;">Eliminar</button>
-          </td>
-        `;
-
-          bookList.appendChild(newRow);
-        });
-      });
-      // Add an event listener for the "Editar" button
-
-    }
-  );
+    console.log("Book data stored in the database.");
+    alert("Libro guardado exitosamente.");
+    window.location.href = "../HTML/PrincipalALibros.html";
+  } catch (error) {
+    console.error("Hubo un error subiendo los archivos:", error);
+    alert("Problema al subir los archivos.");
+  }
 }
+
 document.getElementById("btnGuardar").addEventListener("click", UploadProcess);
 
 
