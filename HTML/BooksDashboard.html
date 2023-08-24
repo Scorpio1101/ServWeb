@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>Biblioteca - BiblioTek</title>
     <link rel="stylesheet" href="../CSS/BooksDashboard.css">
 </head>
+
 <body>
     <header>
         <a href="../HTML/PrincipalUsuario.html">
@@ -14,10 +16,60 @@
         </a>
         <div class="botones-container">
             <h1>BiblioTEK</h1>
-        </div>        
-    </header>    
+        </div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search by name or author">
+            <button onclick="searchBooks()">Search</button>
+        </div>
+    </header>
+    <div id="bookCarousel">
+        <!-- Books will be displayed here -->
+    </div>
     <div class="back-button-container">
         <a href="../HTML/PrincipalUsuario.html" class="back-button">Regresar</a>
     </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+    <script>
+        // Function to fetch and display books in the carousel
+        function displayBooks(books) {
+            const carousel = document.getElementById('bookCarousel');
+            carousel.innerHTML = '';
+
+            books.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+                const title = document.createElement('h3');
+                title.textContent = book.title;
+                const author = document.createElement('p');
+                author.textContent = `Author: ${book.author}`;
+                bookCard.appendChild(title);
+                bookCard.appendChild(author);
+                carousel.appendChild(bookCard);
+            });
+        }
+
+        // Function to search books by name or author
+        function searchBooks() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const booksRef = firebase.database().ref('books');
+    
+            booksRef.once('value', snapshot => {
+                const books = [];
+                snapshot.forEach(childSnapshot => {
+                    const book = childSnapshot.val();
+                    if (book.title.toLowerCase().includes(searchTerm) || book.author.toLowerCase().includes(searchTerm)) {
+                        books.push(book);
+                    }
+                });
+
+                displayBooks(books);
+            });
+        }
+    </script>
 </body>
+
 </html>
