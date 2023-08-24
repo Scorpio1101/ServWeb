@@ -165,6 +165,7 @@ function validate_field(field) {
   }
 }
 
+
 function generarContrasena() {
   var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   var longitud = 10;
@@ -177,6 +178,7 @@ function generarContrasena() {
 
   document.getElementById("password").value = contrasena;
 }
+
 
 function togglePasswordVisibility() {
   var passwordInput = document.getElementById("password");
@@ -191,6 +193,8 @@ function togglePasswordVisibility() {
   }
 }
 
+
+//Actualizar o crear valores en BD Usuarios.  -Se usa en Registro.html y AgregarUsuarios.html-
 database.ref("users").on("child_added", snapshot => {
   const user = snapshot.val();
 
@@ -211,7 +215,38 @@ database.ref("users").on("child_added", snapshot => {
   document.querySelector(".user-list").appendChild(newRow);
 });
 
-// Add event listeners for edit and delete buttons
+
+//Consulta información de la BD Usuarios.  -Se usa en Perfil.html-
+document.addEventListener("DOMContentLoaded", function () {
+  const userNameElement = document.querySelector("h2");
+  const userEmailElement = document.querySelector("p");
+
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      // El usuario está autenticado, mostrar datos
+      if (user.displayName) {
+        userNameElement.textContent = user.displayName;
+      } else {
+        firebase.database().ref('users/' + user.uid).once('value').then(function (snapshot) {
+          let userData = snapshot.val();
+          if (userData && userData.first_name && userData.last_name) {
+            userNameElement.textContent = userData.first_name + ' ' + userData.last_name;
+          } else {
+            userNameElement.textContent = "Nombre no disponible";
+          }
+        });
+      }
+      userEmailElement.textContent = "Correo electrónico: " + user.email;
+    } else {
+      // No hay usuario autenticado
+      userNameElement.textContent = "Usuario no autenticado";
+      userEmailElement.textContent = "Correo electrónico: No disponible";
+    }
+  });
+});
+
+
+//Consulta todos los usuarios en BD.  -Se usa en AdministrarUsuarios.html-
 document.addEventListener("click", function (event) {
   if (event.target.classList.contains("edit")) {
     const userId = event.target.getAttribute("data-id");
@@ -231,7 +266,8 @@ document.addEventListener("click", function (event) {
   }
 });
 
-// Evento que se dispara cuando la página se ha cargado completamente
+
+//Permite modificar el Usuario en la BD  -Se usa en EditarUsuario.html
 document.addEventListener("DOMContentLoaded", function () {
   // Obtén el ID del usuario de la consulta de parámetros
   const urlParams = new URLSearchParams(window.location.search);
@@ -259,7 +295,4 @@ document.addEventListener("DOMContentLoaded", function () {
       emailField.value = userData.email;
     }
   });
-
-  
-
 });

@@ -1,5 +1,12 @@
+<!-- SDKs for Firebase products -->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+<script src="../Js/firebase.js"></script>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,30 +14,77 @@
     <title>Perfil</title>
     <link rel="stylesheet" href="../CSS/Perfil.css">
 </head>
+
 <body>
     <div class="container">
-            <div class="login-form">
-                <form>
-                    <a href="../HTML/PrincipalUsuario.html">
-                        <img src="../IMÁGENES/Logo.png">
-                    </a>
-                    <h1>BiblioTek</h1>
-                    <div class="botones-container">
-                            <button class="boton" >Mis Libros</button>
-                    </div>
-                    <div class="profile-info">
-                        <img src="../IMÁGENES/usuario-de-perfil.png" alt="Imagen de perfil">
-                        <h2>Nombre de usuario</h2>
-                        <p>Correo electrónico:</p>
-                    </div>
-                    
-                </form>
-            </div>
-        </nav> 
+        <div class="login-form">
+            <form>
+                <a href="../HTML/PrincipalUsuario.html">
+                    <img src="../IMÁGENES/Logo.png">
+                </a>
+                <h1>BiblioTek</h1>
+                <div class="botones-container">
+                    <button class="boton">Mis Libros</button>
+                </div>
+                <div class="profile-info">
+                    <img src="../IMÁGENES/usuario-de-perfil.png" alt="Imagen de perfil">
+                    <h2>Usuario</h2>
+                    <p></p>
+                </div>
+
+            </form>
+        </div>
+        </nav>
     </div>
     <div class="back-button-container">
         <a href="../HTML/PrincipalUsuario.html" class="back-button">Regresar</a>
     </div>
 </body>
-</html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Asegúrate de que Firebase esté inicializado
+        // Si ya inicializaste Firebase en otro lugar, puedes omitir esta parte.
+        var firebaseConfig = {
+            apiKey: "AIzaSyAUuOzPZ1k3-YKMtQzO1AX9XE_hUgS0LhA",
+            authDomain: "bibliotek-6aa3f.firebaseapp.com",
+            databaseURL: "https://bibliotek-6aa3f-default-rtdb.firebaseio.com",
+            projectId: "bibliotek-6aa3f",
+            storageBucket: "bibliotek-6aa3f.appspot.com",
+            messagingSenderId: "459978600030",
+            appId: "1:459978600030:web:ccd097da5ab5c2c72a4ecf"
+        };
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
 
+        const userNameElement = document.querySelector("h2");
+        const userEmailElement = document.querySelector("p");
+
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                // El usuario está autenticado, mostrar datos
+                if (user.displayName) {
+                    userNameElement.textContent = user.displayName;
+                } else {
+                    // Si no se ha establecido un displayName para el usuario, 
+                    // puedes obtenerlo de la base de datos si lo has almacenado allí.
+                    firebase.database().ref('users/' + user.uid).once('value').then(function (snapshot) {
+                        let userData = snapshot.val();
+                        if (userData && userData.first_name && userData.last_name) {
+                            userNameElement.textContent = userData.first_name + ' ' + userData.last_name;
+                        } else {
+                            userNameElement.textContent = "Nombre no disponible";
+                        }
+                    });
+                }
+                userEmailElement.textContent = "Correo electrónico: " + user.email;
+            } else {
+                // No hay usuario autenticado
+                userNameElement.textContent = "Usuario no autenticado";
+                userEmailElement.textContent = "Correo electrónico: No disponible";
+            }
+        });
+    });
+</script>
+
+</html>
