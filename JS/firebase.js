@@ -63,7 +63,6 @@ function register() {
 
       // Listo
       alert('Usuario creado satisfactoriamente!');
-      window.location.href = "../HTML/PrincipalALibros.html";
     })
     .catch(function (error) {
       // Firebase utilizará esto para alertar de sus errores
