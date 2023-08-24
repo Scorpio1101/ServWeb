@@ -35,11 +35,11 @@
       </div>
       <div class="form-group m-4">
         <label for="imagen">Imagen:</label>
-        <input type="file" class="form-control-file" id="imagen" name="imagen">
+        <input type="file" class="form-control-file" id="nuevaImagen" name="imagen">
       </div>
       <div class="form-group m-4">
         <label for="documento">Documento:</label>
-        <input type="file" class="form-control-file" id="documento" name="documento">
+        <input type="file" class="form-control-file" id="nuevoDocumento" name="documento">
     </div>
       <button class="btn btn-primary" id="btnGuardar" onclick="updateBook()">Actualizar</button>
     </div>
@@ -51,8 +51,10 @@
 </body>
 
 <!-- Firebase JS SDK -->
-<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
 
 <script>
   // Configuración de Firebase
@@ -71,6 +73,8 @@
 
   // Referencia a la base de datoss
   const database = firebase.database();
+  const storage = firebase.storage();
+
 
   // Script para cargar los datos del libro en los campos de edición
     function loadBookData() {
@@ -99,42 +103,67 @@
     // Llama a la función para cargar los datos del libro cuando la página se carga
     window.onload = loadBookData;
 
-    // Función para actualizar el libro (similar a la que ya tienes para usuarios)
     function updateBook() {
-      // Obtén el ID del libro de los parámetros de la URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const bookId = urlParams.get("id");
+  // Obtén el ID del libro de los parámetros de la URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const bookId = urlParams.get("id");
 
-      // Obtén los valores de los campos de edición
-      const updatedNombre = document.getElementById("nombre").value;
-      const updatedAutor = document.getElementById("autor").value;
-      const updatedAnno = document.getElementById("anno").value;
-      const updatedPrecio = document.getElementById("precio").value;
-      const updatedTipo = document.getElementById("tipo").value;
+  // Obtén los valores de los campos de edición
+  const updatedNombre = document.getElementById("nombre").value;
+  const updatedAutor = document.getElementById("autor").value;
+  const updatedAnno = document.getElementById("anno").value;
+  const updatedPrecio = document.getElementById("precio").value;
+  const updatedTipo = document.getElementById("tipo").value;
 
-      // Crea un objeto con los datos actualizados
-      const updatedBookData = {
-        nombre: updatedNombre,
-        autor: updatedAutor,
-        anno: updatedAnno,
-        precio: updatedPrecio,
-        tipo: updatedTipo,
-      };
+  // Obtén las referencias a los nuevos archivos de imagen y documento
+  const updatedImagen = document.getElementById("nuevaImagen").files[0];
+  const updatedDocumento = document.getElementById("nuevoDocumento").files[0];
 
-      // Actualiza los datos del libro en la base de datos
-      const bookRef = database.ref("books/" + bookId);
-      bookRef
-        .update(updatedBookData)
-        .then(function () {
-          // Datos actualizados exitosamente
-          alert("Datos del libro actualizados correctamente");
-          // Redirige a la página principal de libros u otra ubicación después de la actualización
-          window.location.href = "/HTML/PrincipalALibros.html"
+  // Crea un objeto con los datos actualizados
+  const updatedBookData = {
+    nombre: updatedNombre,
+    autor: updatedAutor,
+    anno: updatedAnno,
+    precio: updatedPrecio,
+    tipo: updatedTipo,
+  };
+
+  // Actualiza los datos del libro en la base de datos
+  const bookRef = database.ref("books/" + bookId);
+  bookRef
+    .update(updatedBookData)
+    .then(function () {
+      // Datos actualizados exitosamente
+
+      // Sube la imagen a Firebase Storage
+      const storageRef = firebase.storage().ref().child("ImágenesActualizadas/" + bookId);
+      storageRef.put(updatedImagen)
+        .then(function (snapshot) {
+          // Imagen subida con éxito
+
+          // Sube el documento a Firebase Storage
+          const documentStorageRef = firebase.storage().ref().child("DocumentosActualizados/" + bookId);
+          documentStorageRef.put(updatedDocumento)
+            .then(function (documentSnapshot) {
+              // Documento subido con éxito
+              alert("Datos del libro actualizados correctamente");
+              // Redirige a la página principal de libros u otra ubicación después de la actualización
+              window.location.href = "/HTML/PrincipalALibros.html";
+            })
+            .catch(function (documentError) {
+              // Error al subir el documento
+              alert("Error al subir el documento del libro: " + documentError.message);
+            });
         })
         .catch(function (error) {
-          // Ocurrió un error al actualizar los datos
-          alert("Error al actualizar los datos del libro: " + error.message);
+          // Error al subir la imagen
+          alert("Error al subir la imagen del libro: " + error.message);
         });
-    }
+    })
+    .catch(function (error) {
+      // Ocurrió un error al actualizar los datos
+      alert("Error al actualizar los datos del libro: " + error.message);
+    });
+}
 </script>
 </html>

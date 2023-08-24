@@ -5,6 +5,12 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: white;
     color: #ffffff;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+    min-height: 100vh;
 }
 
 /* Estilos de la barra lateral */
@@ -77,54 +83,49 @@ body {
     margin-left: 5px;
 }
 
-/* Fondo de la tabla */
 .table {
-    background-color: #422c0b80;
-    border-radius: 10px;
-    margin-top: 20px;
-    overflow: hidden;
-    margin-left: auto; /* Establecer el margen izquierdo a 'auto' */
-    margin-right: 80px; /* Establecer el margen derecho a 'auto' */
-    width: 70%; 
-    border-radius: 3%;
+    background-color: #ffffff; 
+    color: #333333; 
+    border-radius: 15px;
+    margin: 0 auto; 
+    width: 90%; 
+    max-width: 800px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3); 
+    border-collapse: collapse; 
 }
+
 .container {
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
-    margin: 100px auto;
+    background-color: transparent; 
+    padding: 100px;
+    width: 90%; 
+    max-width: 800px;
+    margin-left: 400px;
+    margin-right: 100px;
 }
 
-/* Encabezados de la tabla */
-.table thead {
-    background-color: #ff5500bc;
+.table th {
+    background-color: #243f65;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
 }
 
-.table thead th {
-    border: none;
-    padding: 12px;
-}
-
-/* Celdas de la tabla */
-.table tbody td {
-    color: white;
-    padding: 10px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+.table td {
+    padding: 15px 40px;
+    text-align: center;
+    font-size: 16px; 
 }
 
 /* Enlace de la imagen */
-.table tbody td a {
+.table td a {
     display: inline-block;
+    color: #ff5500;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 /* Hover sobre las filas */
 .table tbody tr:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: #f2f2f2;
 }
-
-.table {
-    background-color: rgba(0, 0, 0, 0.8);
-    border: none;
-    color: #ffffff;
-  }
