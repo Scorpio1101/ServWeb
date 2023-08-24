@@ -42,6 +42,9 @@
     <a href="../HTML/AdministrarUsuarios.html" class="back-button">Regresar</a>
 </div>
 </body>
+<!-- Firebase JS SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
 
 <script>
   // Your web app's Firebase configuration
@@ -59,6 +62,33 @@ firebase.initializeApp(firebaseConfig);
 
 // Initialize variables
 const database = firebase.database()
+
+// Esta función se llama cuando la página se carga
+function cargarDatosUsuario() {
+  // Obtén el ID del usuario de los parámetros de la URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const userId = urlParams.get("id");
+
+  // Obtén una referencia al usuario en la base de datos
+  const userRef = database.ref("users/" + userId);
+
+  // Lee los datos del usuario
+  userRef.once("value").then(function(snapshot) {
+    const userData = snapshot.val();
+
+    // Rellena los campos de edición con los datos del usuario
+    document.getElementById("first_name").value = userData.first_name;
+    document.getElementById("last_name").value = userData.last_name;
+    document.getElementById("roles").value = userData.roles;
+    document.getElementById("dni").value = userData.dni;
+    document.getElementById("email").value = userData.email;
+  }).catch(function(error) {
+    console.error("Error al cargar los datos del usuario:", error);
+  });
+}
+
+// Llama a la función para cargar los datos del usuario cuando la página se carga
+window.onload = cargarDatosUsuario;
 
   // Agregar esta función para actualizar los datos del usuario
   function updateUser() {
