@@ -122,41 +122,19 @@
       };
 
       // Actualiza los datos del libro en la base de datos
-  const bookRef = database.ref("books/" + bookId);
-  bookRef
-    .update(updatedBookData)
-    .then(function () {
-      // Datos actualizados exitosamente
-
-      // Sube la imagen a Firebase Storage
-      const storageRef = firebase.storage().ref().child("book_images/" + bookId);
-      storageRef.put(updatedImagen)
-        .then(function (snapshot) {
-          // Imagen subida con éxito
-
-          // Sube el documento a Firebase Storage
-          const documentStorageRef = firebase.storage().ref().child("book_documents/" + bookId);
-          documentStorageRef.put(updatedDocumento)
-            .then(function (documentSnapshot) {
-              // Documento subido con éxito
-              alert("Datos del libro actualizados correctamente");
-              // Redirige a la página principal de libros u otra ubicación después de la actualización
-              window.location.href = "/HTML/PrincipalALibros.html";
-            })
-            .catch(function (documentError) {
-              // Error al subir el documento
-              alert("Error al subir el documento del libro: " + documentError.message);
-            });
+      const bookRef = database.ref("books/" + bookId);
+      bookRef
+        .update(updatedBookData)
+        .then(function () {
+          // Datos actualizados exitosamente
+          alert("Datos del libro actualizados correctamente");
+          // Redirige a la página principal de libros u otra ubicación después de la actualización
+          window.location.href = "/HTML/PrincipalALibros.html"
         })
         .catch(function (error) {
-          // Error al subir la imagen
-          alert("Error al subir la imagen del libro: " + error.message);
+          // Ocurrió un error al actualizar los datos
+          alert("Error al actualizar los datos del libro: " + error.message);
         });
-    })
-    .catch(function (error) {
-      // Ocurrió un error al actualizar los datos
-      alert("Error al actualizar los datos del libro: " + error.message);
-    });
     }
 </script>
 </html>
