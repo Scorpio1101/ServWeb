@@ -62,6 +62,16 @@
     <!-- Inclusión de firebase.js -->
     <script src="../JS/firebase.js"></script>
     <script>
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                console.log("Usuario autenticado:", user.uid);
+                // Aquí puedes añadir más acciones si el usuario está autenticado.
+            } else {
+                console.log("Usuario no autenticado");
+                window.location.href = 'LogIn.html';  // Redireccionar al usuario al inicio de sesión si no está autenticado.
+            }
+        });
+
         // Función para cargar y mostrar libros en la tabla
         function loadBooks() {
             // Referencia a la base de datos donde se almacenan los libros

@@ -52,7 +52,6 @@ function register() {
         email: email,
         first_name: first_name,
         last_name: last_name,
-        last_login: Date.now(),
         dni: dni,
         roles: roles,
         password: password // Agrega el campo Contraseña

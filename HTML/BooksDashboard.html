@@ -10,7 +10,9 @@
 
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script> <!-- Añade esta línea -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
 
     <script>
         // Your web app's Firebase configuration
@@ -91,6 +93,17 @@
             });
         }
 
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                console.log("Usuario autenticado:", user.uid);
+                // Aquí puedes añadir más acciones si el usuario está autenticado.
+            } else {
+                console.log("Usuario no autenticado");
+                window.location.href = 'LogIn.html';  // Redireccionar al usuario al inicio de sesión si no está autenticado.
+            }
+        });
+
+
         // Función para cargar y mostrar libros en la tabla
         function loadBooks() {
             // Referencia a la base de datos donde se almacenan los libros
@@ -111,7 +124,7 @@
                     <td>${book.anno}</td>
                     <td>${book.precio}</td>
                     <td>${book.tipo}</td>
-                    <td><button onclick="toggleFavorite('${snapshot.key}', ${book.favorito})">${book.favorito ? 'Remover de Favoritos' : 'Agregar a Favoritos'}</button></td>
+                    <td><button onclick="toggleFavorite('${snapshot.key}', this)">${book.favorito ? 'Eliminar de Favoritos' : 'Agregar a Favoritos'}</button></td>
                 `;
 
                 // Añadir la nueva fila a la tabla
@@ -122,16 +135,31 @@
         // Llamar a la función loadBooks cuando se carga la página
         window.addEventListener("DOMContentLoaded", loadBooks);
 
-        function toggleFavorite(bookId, currentStatus) {
-            const newStatus = !currentStatus; // Cambiar el estado actual
-            database.ref('books/' + bookId).update({ favorito: newStatus }, error => {
-                if (error) {
-                    console.error("Error updating favorite status:", error);
+        function toggleFavorite(bookId, btnElement) {
+            const userId = firebase.auth().currentUser.uid; // Obtener el ID del usuario actual
+            console.log("User ID:", userId);
+            const userFavoriteRef = database.ref("userFavorites/" + userId + "/" + bookId);
+            console.log("Firebase Reference:", userFavoriteRef.toString());
+
+            // Verificar si el libro ya está marcado como favorito
+            userFavoriteRef.once('value', snapshot => {
+                console.log("Snapshot exists:", snapshot.exists());
+                if (snapshot.exists()) {
+                    // Si ya está marcado como favorito, eliminarlo
+                    console.log("Removing from favorites");
+                    userFavoriteRef.remove();
+                    btnElement.textContent = "Agregar a Favoritos"; // Actualizar el texto del botón
                 } else {
-                    loadBooks(); // Recargar la lista de libros para reflejar el cambio
+                    // Si no está marcado como favorito, añadirlo
+                    console.log("Adding to favorites");
+                    userFavoriteRef.set(true);
+                    btnElement.textContent = "Eliminar de Favoritos"; // Actualizar el texto del botón
                 }
             });
         }
+
+
+
 
     </script>
 

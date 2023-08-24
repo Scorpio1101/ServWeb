@@ -10,24 +10,76 @@
 
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="../JS/firebase.js"></script> <!-- Esto asume que tienes la inicialización de Firebase aquí -->
 
     <script>
-        // Your web app's Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyAUuOzPZ1k3-YKMtQzO1AX9XE_hUgS0LhA",
-            authDomain: "bibliotek-6aa3f.firebaseapp.com",
-            databaseURL: "https://bibliotek-6aa3f-default-rtdb.firebaseio.com",
-            projectId: "bibliotek-6aa3f",
-            storageBucket: "bibliotek-6aa3f.appspot.com",
-            messagingSenderId: "459978600030",
-            appId: "1:459978600030:web:ccd097da5ab5c2c72a4ecf"
-        };
+        // Asegurarse de que el usuario esté autenticado
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                console.log("Usuario autenticado:", user.uid);
+            } else {
+                console.log("Usuario no autenticado");
+                window.location.href = 'LogIn.html';
+            }
+        });
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+        function loadFavoriteBooks() {
+            const currentUser = firebase.auth().currentUser;
+            if (!currentUser) {
+                console.error("Usuario no autenticado");
+                return;  // Si no estás autenticado, termina la ejecución de la función aquí
+            }
 
-        const database = firebase.database();
+            const userId = currentUser.uid;
+            const userFavoritesRef = database.ref("userFavorites/" + userId);
+
+            userFavoritesRef.once('value', snapshot => {
+                const favoriteBooks = snapshot.val();
+                console.log("Libros favoritos obtenidos:", favoriteBooks);
+
+                if (favoriteBooks) {
+                    document.querySelector(".book-list").innerHTML = '';
+
+                    Object.keys(favoriteBooks).forEach(bookId => {
+                        const bookRef = database.ref("books/" + bookId);
+                        bookRef.once('value', bookSnapshot => {
+                            const book = bookSnapshot.val();
+
+                            const newRow = document.createElement("tr");
+                            newRow.innerHTML = `
+                                <td><a href="${book.docUrl}" target="_blank"><img src="${book.imagenUrl}" alt="${book.nombre}" width="50"></a></td>
+                                <td>${book.nombre}</td>
+                                <td>${book.autor}</td>
+                                <td>${book.anno}</td>
+                                <td>${book.precio}</td>
+                                <td>${book.tipo}</td>
+                                <td><button onclick="toggleFavorite('${bookId}')">Eliminar de Favoritos</button></td>
+                            `;
+
+                            console.log("Fila creada:", newRow);
+                            document.querySelector(".book-list").appendChild(newRow);
+                        });
+                    });
+                } else {
+                    document.querySelector(".book-list").innerHTML = '<tr><td colspan="7">No tienes libros favoritos.</td></tr>';
+                }
+            });
+        }
+
+        function toggleFavorite(bookId) {
+            const userId = firebase.auth().currentUser.uid;
+            const userFavoriteRef = database.ref("userFavorites/" + userId + "/" + bookId);
+
+            userFavoriteRef.remove().then(() => {
+                loadFavoriteBooks();
+            }).catch(error => {
+                console.error("Error removing favorite:", error);
+            });
+        }
+
+        window.addEventListener("DOMContentLoaded", loadFavoriteBooks);
     </script>
 </head>
 
@@ -42,7 +94,6 @@
         </div>
     </header>
 
-    <!-- Tabla para mostrar los libros favoritos -->
     <table class="table text-white m-4">
         <thead>
             <tr>
@@ -63,45 +114,6 @@
     <div class="back-button-container">
         <a href="../HTML/PrincipalUsuario.html" class="back-button">Regresar a la Biblioteca</a>
     </div>
-
-    <script>
-        function loadFavoriteBooks() {
-            // Limpiar la lista actual primero
-            document.querySelector(".book-list").innerHTML = "";
-
-            const booksRef = database.ref("books");
-            booksRef.on("child_added", function (snapshot) {
-                const book = snapshot.val();
-                if (book.favorito) {
-                    const newRow = document.createElement("tr");
-                    newRow.innerHTML = `
-                        <td><a href="${book.docUrl}" target="_blank"><img src="${book.imagenUrl}" alt="${book.nombre}" width="50"></a></td>
-                        <td>${book.nombre}</td>
-                        <td>${book.autor}</td>
-                        <td>${book.anno}</td>
-                        <td>${book.precio}</td>
-                        <td>${book.tipo}</td>
-                        <td><button onclick="toggleFavorite('${snapshot.key}', ${book.favorito})">${book.favorito ? 'Remover de Favoritos' : 'Agregar a Favoritos'}</button></td>
-                    `;
-                    document.querySelector(".book-list").appendChild(newRow);
-                }
-            });
-        }
-
-        function toggleFavorite(bookId, currentStatus) {
-            const newStatus = !currentStatus;
-            database.ref('books/' + bookId).update({ favorito: newStatus }, error => {
-                if (error) {
-                    console.error("Error updating favorite status:", error);
-                } else {
-                    loadFavoriteBooks();  // Recargar la lista de libros favoritos para reflejar el cambio
-                }
-            });
-        }
-
-        // Llamar a la función loadFavoriteBooks cuando se carga la página
-        window.addEventListener("DOMContentLoaded", loadFavoriteBooks);
-    </script>
 
 </body>
 
