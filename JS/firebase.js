@@ -220,37 +220,6 @@ database.ref("users").on("child_added", snapshot => {
   document.querySelector(".user-list").appendChild(newRow);
 });
 
-
-//Consulta información de la BD Usuarios.  -Se usa en Perfil.html-    **Revisar acá**
-document.addEventListener("DOMContentLoaded", function () {
-  const userNameElement = document.querySelector("h2");
-  const userEmailElement = document.querySelector("p");
-
-  firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      // El usuario está autenticado, mostrar datos
-      if (user.displayName) {
-        userNameElement.textContent = user.displayName;
-      } else {
-        firebase.database().ref('users/' + user.uid).once('value').then(function (snapshot) {
-          let userData = snapshot.val();
-          if (userData && userData.first_name && userData.last_name) {
-            userNameElement.textContent = userData.first_name + ' ' + userData.last_name;
-          } else {
-            userNameElement.textContent = "Nombre no disponible";
-          }
-        });
-      }
-      userEmailElement.textContent = "Correo electrónico: " + user.email;
-    } else {
-      // No hay usuario autenticado
-      userNameElement.textContent = "Usuario no autenticado";
-      userEmailElement.textContent = "Correo electrónico: No disponible";
-    }
-  });
-});
-
-
 //Consulta todos los usuarios en BD.  -Se usa en AdministrarUsuarios.html-
 document.addEventListener("click", function (event) {
   if (event.target.classList.contains("edit")) {

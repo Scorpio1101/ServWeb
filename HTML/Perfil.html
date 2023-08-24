@@ -42,24 +42,33 @@
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Asegúrate de que Firebase esté inicializado
-        // Si ya inicializaste Firebase en otro lugar, puedes omitir esta parte.
-        var firebaseConfig = {
-            apiKey: "AIzaSyAUuOzPZ1k3-YKMtQzO1AX9XE_hUgS0LhA",
-            authDomain: "bibliotek-6aa3f.firebaseapp.com",
-            databaseURL: "https://bibliotek-6aa3f-default-rtdb.firebaseio.com",
-            projectId: "bibliotek-6aa3f",
-            storageBucket: "bibliotek-6aa3f.appspot.com",
-            messagingSenderId: "459978600030",
-            appId: "1:459978600030:web:ccd097da5ab5c2c72a4ecf"
-        };
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
+    // Asegúrate de que Firebase esté inicializado
+    // Si ya inicializaste Firebase en otro lugar, puedes omitir esta parte.
+    var firebaseConfig = {
+        apiKey: "AIzaSyAUuOzPZ1k3-YKMtQzO1AX9XE_hUgS0LhA",
+        authDomain: "bibliotek-6aa3f.firebaseapp.com",
+        databaseURL: "https://bibliotek-6aa3f-default-rtdb.firebaseio.com",
+        projectId: "bibliotek-6aa3f",
+        storageBucket: "bibliotek-6aa3f.appspot.com",
+        messagingSenderId: "459978600030",
+        appId: "1:459978600030:web:ccd097da5ab5c2c72a4ecf"
+    };
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
 
-        const userNameElement = document.querySelector("h2");
-        const userEmailElement = document.querySelector("p");
+    const userNameElement = document.querySelector("h2");
+    const userEmailElement = document.querySelector("p");
 
+    // Verifica primero si los datos del usuario están en el almacenamiento local
+    const storedDisplayName = localStorage.getItem('userdisplayName');
+    const storedEmail = localStorage.getItem('userEmail');
+
+    if (storedDisplayName && storedEmail) {
+        // Si los datos del usuario están en el almacenamiento local, úsalos directamente
+        userNameElement.textContent = storedDisplayName;
+        userEmailElement.textContent = storedEmail;
+    } else {
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 // El usuario está autenticado, mostrar datos
@@ -78,13 +87,18 @@
                     });
                 }
                 userEmailElement.textContent = "Correo electrónico: " + user.email;
+
+                // Almacena los datos del usuario en el almacenamiento local
+                localStorage.setItem('userDisplayName', userNameElement.textContent);
+                localStorage.setItem('userEmail', userEmailElement.textContent);
             } else {
                 // No hay usuario autenticado
                 userNameElement.textContent = "Usuario no autenticado";
                 userEmailElement.textContent = "Correo electrónico: No disponible";
             }
         });
-    });
+    }
+});
 </script>
 
 </html>
