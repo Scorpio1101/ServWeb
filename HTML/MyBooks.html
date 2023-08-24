@@ -5,81 +5,104 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis libros - BiblioTek</title>
-    <link rel="stylesheet" href="../CSS/MyBooks.css">
+    <title>Mis Libros Favoritos - BiblioTek</title>
+    <link rel="stylesheet" href="../CSS/BooksDashboard.css">
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAUuOzPZ1k3-YKMtQzO1AX9XE_hUgS0LhA",
+            authDomain: "bibliotek-6aa3f.firebaseapp.com",
+            databaseURL: "https://bibliotek-6aa3f-default-rtdb.firebaseio.com",
+            projectId: "bibliotek-6aa3f",
+            storageBucket: "bibliotek-6aa3f.appspot.com",
+            messagingSenderId: "459978600030",
+            appId: "1:459978600030:web:ccd097da5ab5c2c72a4ecf"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        const database = firebase.database();
+    </script>
 </head>
 
 <body>
+
     <header>
         <a href="../HTML/PrincipalUsuario.html">
             <img src="../IMÁGENES/Logo.png">
         </a>
         <div class="botones-container">
-            <h1>Mis Libros</h1>
-        </div>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search by name or author">
-            <button onclick="searchMyBooks()">Search</button>
+            <h1>Mis Libros Favoritos</h1>
         </div>
     </header>
-        <!-- Tabla para mostrar los libros -->
- <table class="table text-white m-4">
-    <thead>
-        <tr>
-            <th>Imagen</th>
-            <th>Nombre</th>
-            <th>Autor</th>
-            <th>Año</th>
-            <th>Precio</th>
-            <th>Tipo</th>
-            <th>Favorito</th>
-        </tr>
-    </thead>
-    <tbody class="book-list">
-        <!-- Los libros se cargarán aquí desde Firebase -->
-    </tbody>
-</table>
+
+    <!-- Tabla para mostrar los libros favoritos -->
+    <table class="table text-white m-4">
+        <thead>
+            <tr>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Autor</th>
+                <th>Año</th>
+                <th>Precio</th>
+                <th>Tipo</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody class="book-list">
+            <!-- Los libros favoritos se cargarán aquí desde Firebase -->
+        </tbody>
+    </table>
+
     <div class="back-button-container">
-        <a href="../HTML/PrincipalUsuario.html" class="back-button">Regresar</a>
+        <a href="../HTML/PrincipalUsuario.html" class="back-button">Regresar a la Biblioteca</a>
     </div>
 
+    <script>
+        function loadFavoriteBooks() {
+            // Limpiar la lista actual primero
+            document.querySelector(".book-list").innerHTML = "";
 
+            const booksRef = database.ref("books");
+            booksRef.on("child_added", function (snapshot) {
+                const book = snapshot.val();
+                if (book.favorito) {
+                    const newRow = document.createElement("tr");
+                    newRow.innerHTML = `
+                        <td><a href="${book.docUrl}" target="_blank"><img src="${book.imagenUrl}" alt="${book.nombre}" width="50"></a></td>
+                        <td>${book.nombre}</td>
+                        <td>${book.autor}</td>
+                        <td>${book.anno}</td>
+                        <td>${book.precio}</td>
+                        <td>${book.tipo}</td>
+                        <td><button onclick="toggleFavorite('${snapshot.key}', ${book.favorito})">${book.favorito ? 'Remover de Favoritos' : 'Agregar a Favoritos'}</button></td>
+                    `;
+                    document.querySelector(".book-list").appendChild(newRow);
+                }
+            });
+        }
 
-<!-- Inclusión de firebase.js -->
-<script src="../JS/firebase.js"></script>
-<script>
-   function loadFavoriteBooks() {
-    const userId = firebase.auth().currentUser.uid;  // Asumimos que el usuario ya ha iniciado sesión
-    const favoritesRef = database.ref('users/' + userId + '/favorites');
+        function toggleFavorite(bookId, currentStatus) {
+            const newStatus = !currentStatus;
+            database.ref('books/' + bookId).update({ favorito: newStatus }, error => {
+                if (error) {
+                    console.error("Error updating favorite status:", error);
+                } else {
+                    loadFavoriteBooks();  // Recargar la lista de libros favoritos para reflejar el cambio
+                }
+            });
+        }
 
-    favoritesRef.on('child_added', snapshot => {
-        const bookId = snapshot.key;
-        const bookRef = database.ref('books/' + bookId);
+        // Llamar a la función loadFavoriteBooks cuando se carga la página
+        window.addEventListener("DOMContentLoaded", loadFavoriteBooks);
+    </script>
 
-        bookRef.once('value', bookSnapshot => {
-            const book = bookSnapshot.val();
-            
-            // Aquí, crea y añade una nueva fila a la tabla de libros en MyBooks.html
-            // similar a cómo lo hicimos en loadBooks() anteriormente.
-            const newRow = document.createElement("tr");
-            newRow.innerHTML = `
-                <td><a href="${book.docUrl}" target="_blank"><img src="${book.imagenUrl}" alt="${book.nombre}" width="50"></a></td>
-                <td>${book.nombre}</td>
-                <td>${book.autor}</td>
-                <td>${book.anno}</td>
-                <td>${book.precio}</td>
-                <td>${book.tipo}</td>
-            `;
-            document.querySelector(".book-list").appendChild(newRow);
-        });
-    });
-}
-
-// Llamamos a la función cuando se carga la página
-window.addEventListener("DOMContentLoaded", loadFavoriteBooks);
-</script>
-</body>
-</html>
 </body>
 
 </html>

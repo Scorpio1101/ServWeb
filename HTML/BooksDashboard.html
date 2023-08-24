@@ -7,9 +7,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblioteca - BiblioTek</title>
     <link rel="stylesheet" href="../CSS/BooksDashboard.css">
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAUuOzPZ1k3-YKMtQzO1AX9XE_hUgS0LhA",
+            authDomain: "bibliotek-6aa3f.firebaseapp.com",
+            databaseURL: "https://bibliotek-6aa3f-default-rtdb.firebaseio.com",
+            projectId: "bibliotek-6aa3f",
+            storageBucket: "bibliotek-6aa3f.appspot.com",
+            messagingSenderId: "459978600030",
+            appId: "1:459978600030:web:ccd097da5ab5c2c72a4ecf"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+    </script>
 </head>
 
 <body>
+
     <header>
         <a href="../HTML/PrincipalUsuario.html">
             <img src="../IMÁGENES/Logo.png">
@@ -28,83 +49,92 @@
     <div class="back-button-container">
         <a href="../HTML/PrincipalUsuario.html" class="back-button">Regresar</a>
     </div>
-            <!-- Tabla para mostrar los libros -->
- <table class="table text-white m-4">
-    <thead>
-        <tr>
-            <th>Imagen</th>
-            <th>Nombre</th>
-            <th>Autor</th>
-            <th>Año</th>
-            <th>Precio</th>
-            <th>Tipo</th>
-            <th>Favorito</th>
-        </tr>
-    </thead>
-    <tbody class="book-list">
-        <!-- Los libros se cargarán aquí desde Firebase -->
-    </tbody>
-</table>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-    <script src="../JS/firebase.js"></script>
+    <!-- Tabla para mostrar los libros -->
+    <table class="table text-white m-4">
+        <thead>
+            <tr>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Autor</th>
+                <th>Año</th>
+                <th>Precio</th>
+                <th>Tipo</th>
+                <th>Favorito</th>
+            </tr>
+        </thead>
+        <tbody class="book-list">
+            <!-- Los libros se cargarán aquí desde Firebase -->
+        </tbody>
+    </table>
 
     <script>
-
         // Function to search books by name or author
         function searchBooks() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const booksRef = firebase.database().ref('books');
-    
+            const booksRef = database.ref('books');
+
             booksRef.once('value', snapshot => {
                 const books = [];
                 snapshot.forEach(childSnapshot => {
                     const book = childSnapshot.val();
-                    if (book.title.toLowerCase().includes(searchTerm) || book.author.toLowerCase().includes(searchTerm)) {
+                    if (book.nombre.toLowerCase().includes(searchTerm) || book.autor.toLowerCase().includes(searchTerm)) {
                         books.push(book);
                     }
                 });
 
-                displayBooks(books);
+                // Guardar los resultados de búsqueda en el almacenamiento local
+                localStorage.setItem('searchResults', JSON.stringify(books));
+
+                // Redirigir al usuario a la nueva página de resultados
+                window.location.href = 'SearchResults.html';
             });
         }
 
+        // Función para cargar y mostrar libros en la tabla
+        function loadBooks() {
+            // Referencia a la base de datos donde se almacenan los libros
+            const booksRef = database.ref("books");
 
-    // Función para cargar y mostrar libros en la tabla
-    function loadBooks() {
-        // Referencia a la base de datos donde se almacenan los libros
-        const booksRef = database.ref("books");
-        
-        // Escuchar los cambios en la referencia "books"
-        booksRef.on("child_added", function(snapshot) {
-            const book = snapshot.val();
+            // Escuchar los cambios en la referencia "books"
+            booksRef.on("child_added", function (snapshot) {
+                const book = snapshot.val();
 
-            // Crear una nueva fila para la tabla
-            const newRow = document.createElement("tr");
+                // Crear una nueva fila para la tabla
+                const newRow = document.createElement("tr");
 
-            // Rellenar la fila con los datos del libro
-            newRow.innerHTML = `
-            <td><a href="${book.docUrl}" target="_blank"><img src="${book.imagenUrl}" alt="${book.nombre}" width="50"></a></td>
-                <td>${book.nombre}</td>
-                <td>${book.autor}</td>
-                <td>${book.anno}</td>
-                <td>${book.precio}</td>
-                <td>${book.tipo}</td>
-                <td><button onclick="toggleFavorite('${snapshot.key}')">Favorito</button></td>
-            `;
+                // Rellenar la fila con los datos del libro
+                newRow.innerHTML = `
+                    <td><a href="${book.docUrl}" target="_blank"><img src="${book.imagenUrl}" alt="${book.nombre}" width="50"></a></td>
+                    <td>${book.nombre}</td>
+                    <td>${book.autor}</td>
+                    <td>${book.anno}</td>
+                    <td>${book.precio}</td>
+                    <td>${book.tipo}</td>
+                    <td><button onclick="toggleFavorite('${snapshot.key}', ${book.favorito})">${book.favorito ? 'Remover de Favoritos' : 'Agregar a Favoritos'}</button></td>
+                `;
 
-            // Añadir la nueva fila a la tabla
-            document.querySelector(".book-list").appendChild(newRow);
-        });
-    }
+                // Añadir la nueva fila a la tabla
+                document.querySelector(".book-list").appendChild(newRow);
+            });
+        }
 
-    // Llamar a la función loadBooks cuando se carga la página
-    window.addEventListener("DOMContentLoaded", loadBooks);
-</script>
-</body>
-</html>
+        // Llamar a la función loadBooks cuando se carga la página
+        window.addEventListener("DOMContentLoaded", loadBooks);
+
+        function toggleFavorite(bookId, currentStatus) {
+            const newStatus = !currentStatus; // Cambiar el estado actual
+            database.ref('books/' + bookId).update({ favorito: newStatus }, error => {
+                if (error) {
+                    console.error("Error updating favorite status:", error);
+                } else {
+                    loadBooks(); // Recargar la lista de libros para reflejar el cambio
+                }
+            });
+        }
+
+    </script>
+
 </body>
 
 </html>
