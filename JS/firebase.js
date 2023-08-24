@@ -311,6 +311,27 @@ async function UploadProcess() {
   }
 }
 
+function toggleFavorite(bookId) {
+  const userId = firebase.auth().currentUser.uid;  // Asumimos que el usuario ya ha iniciado sesión
+  const userFavoritesRef = database.ref('users/' + userId + '/favorites/' + bookId);
+  const bookRef = database.ref('books/' + bookId);
+
+  // Verificar si el libro ya está marcado como favorito
+  userFavoritesRef.once('value', snapshot => {
+      if (snapshot.exists()) {
+          // Si ya es un favorito, lo eliminamos
+          userFavoritesRef.remove();
+      } else {
+          // Si no es un favorito, lo añadimos
+          // Para ello, primero obtenemos los detalles del libro
+          bookRef.once('value', bookSnapshot => {
+              const bookData = bookSnapshot.val();
+              userFavoritesRef.set(bookData);  // Guardamos los datos del libro en la lista de favoritos del usuario
+          });
+      }
+  });
+}
+
 document.getElementById("btnGuardar").addEventListener("click", UploadProcess);
 
 

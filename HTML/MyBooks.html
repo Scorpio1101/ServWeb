@@ -22,55 +22,64 @@
             <button onclick="searchMyBooks()">Search</button>
         </div>
     </header>
-    <div id="myBooksCarousel">
-        <!-- User's books will be displayed here -->
-    </div>
+        <!-- Tabla para mostrar los libros -->
+ <table class="table text-white m-4">
+    <thead>
+        <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Autor</th>
+            <th>Año</th>
+            <th>Precio</th>
+            <th>Tipo</th>
+            <th>Favorito</th>
+        </tr>
+    </thead>
+    <tbody class="book-list">
+        <!-- Los libros se cargarán aquí desde Firebase -->
+    </tbody>
+</table>
     <div class="back-button-container">
         <a href="../HTML/PrincipalUsuario.html" class="back-button">Regresar</a>
     </div>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
 
-    <script>
-        // Function to fetch and display user's books in the carousel
-        function displayMyBooks(books) {
-            const carousel = document.getElementById('myBooksCarousel');
-            carousel.innerHTML = '';
 
-            books.forEach(book => {
-                const bookCard = document.createElement('div');
-                bookCard.className = 'book-card';
-                const title = document.createElement('h3');
-                title.textContent = book.title;
-                const author = document.createElement('p');
-                author.textContent = `Author: ${book.author}`;
-                bookCard.appendChild(title);
-                bookCard.appendChild(author);
-                carousel.appendChild(bookCard);
-            });
-        }
+<!-- Inclusión de firebase.js -->
+<script src="../JS/firebase.js"></script>
+<script>
+   function loadFavoriteBooks() {
+    const userId = firebase.auth().currentUser.uid;  // Asumimos que el usuario ya ha iniciado sesión
+    const favoritesRef = database.ref('users/' + userId + '/favorites');
 
-        // Function to search user's books by name or author
-        function searchMyBooks() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            // Note: You might need to modify the reference to target the user's specific collection of books.
-            const booksRef = firebase.database().ref('usersBooks');
-    
-            booksRef.once('value', snapshot => {
-                const books = [];
-                snapshot.forEach(childSnapshot => {
-                    const book = childSnapshot.val();
-                    if (book.title.toLowerCase().includes(searchTerm) || book.author.toLowerCase().includes(searchTerm)) {
-                        books.push(book);
-                    }
-                });
+    favoritesRef.on('child_added', snapshot => {
+        const bookId = snapshot.key;
+        const bookRef = database.ref('books/' + bookId);
 
-                displayMyBooks(books);
-            });
-        }
-    </script>
+        bookRef.once('value', bookSnapshot => {
+            const book = bookSnapshot.val();
+            
+            // Aquí, crea y añade una nueva fila a la tabla de libros en MyBooks.html
+            // similar a cómo lo hicimos en loadBooks() anteriormente.
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+                <td><a href="${book.docUrl}" target="_blank"><img src="${book.imagenUrl}" alt="${book.nombre}" width="50"></a></td>
+                <td>${book.nombre}</td>
+                <td>${book.autor}</td>
+                <td>${book.anno}</td>
+                <td>${book.precio}</td>
+                <td>${book.tipo}</td>
+            `;
+            document.querySelector(".book-list").appendChild(newRow);
+        });
+    });
+}
+
+// Llamamos a la función cuando se carga la página
+window.addEventListener("DOMContentLoaded", loadFavoriteBooks);
+</script>
+</body>
+</html>
 </body>
 
 </html>
