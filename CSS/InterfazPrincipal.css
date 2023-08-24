@@ -77,4 +77,40 @@ body {
     margin-left: 5px;
 }
 
+/* Fondo de la tabla */
+.table {
+    background-color: #422c0b80;
+    border-radius: 10px;
+    margin-top: 20px;
+    overflow: hidden;
+    margin-left: 280px; /* Ajustar el margen izquierdo para la barra de navegación */
+    width: calc(100% - 280px); /* Ajustar el ancho para aprovechar todo el espacio disponible */
+}
+
+/* Encabezados de la tabla */
+.table thead {
+    background-color: #e63a006b;
+}
+
+.table thead th {
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+}
+
+/* Celdas de la tabla */
+.table tbody td {
+    color: white;
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Enlace de la imagen */
+.table tbody td a {
+    display: inline-block;
+}
+
+/* Hover sobre las filas */
+.table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.1);
 
